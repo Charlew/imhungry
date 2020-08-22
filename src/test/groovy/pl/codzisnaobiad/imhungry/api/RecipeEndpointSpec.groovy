@@ -10,7 +10,7 @@ class RecipeEndpointSpec extends IntegrationSpec {
         def ingredients = ["bananas", "chocolate"]
 
         and:
-        stubSpoonacularSearchRecipesByIngredients(ingredients, "test.json")
+        stubSpoonacularSearchRecipesByIngredients(ingredients, "SpoonacularSearchRecipesResponse.json")
 
         when:
         def response = get("/recipes/random?ingredient=${ingredients[0]}&ingredient=${ingredients[1]}", RecipeResponse.class)
