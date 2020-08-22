@@ -3,7 +3,7 @@ package pl.codzisnaobiad.imhungry.domain;
 import java.util.List;
 import java.util.Random;
 
-public class DefaultRandomizer<T> implements Randomizer<T> {
+class DefaultRandomizer<T> implements Randomizer<T> {
 
     @Override
     public T randomize(List<T> elements) {

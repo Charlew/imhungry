@@ -1,0 +1,3 @@
+client.spoonacular:
+  base-url: "http://localhost:8089"
+  api-key: "API_KEY"

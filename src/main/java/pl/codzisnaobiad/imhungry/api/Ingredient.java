@@ -1,5 +1,7 @@
 package pl.codzisnaobiad.imhungry.api;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Objects;
 
 public final class Ingredient {
@@ -9,7 +11,11 @@ public final class Ingredient {
     private final float amount;
     private final String unit;
 
-    public Ingredient(String name, String imageUrl, float amount, String unit) {
+    public Ingredient(@JsonProperty("name") String name,
+                      @JsonProperty("imageUrl") String imageUrl,
+                      @JsonProperty("amount") float amount,
+                      @JsonProperty("unit") String unit
+    ) {
         this.name = name;
         this.imageUrl = imageUrl;
         this.amount = amount;

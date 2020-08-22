@@ -1,5 +1,8 @@
 package pl.codzisnaobiad.imhungry.api;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -9,7 +12,11 @@ public final class RecipeResponse {
     private final String imageUrl;
     private final List<Ingredient> ingredients;
 
-    public RecipeResponse(String name, String imageUrl, List<Ingredient> ingredients) {
+    @JsonCreator
+    public RecipeResponse(@JsonProperty("name") String name,
+                          @JsonProperty("imageUrl") String imageUrl,
+                          @JsonProperty("ingredients") List<Ingredient> ingredients
+    ) {
         this.name = name;
         this.imageUrl = imageUrl;
         this.ingredients = ingredients;
