@@ -13,7 +13,7 @@ class SpoonacularRecipeProvider implements RecipeProvider {
 
     private final SpoonacularClient spoonacularClient;
 
-    public SpoonacularRecipeProvider(SpoonacularClient spoonacularClient) {
+    SpoonacularRecipeProvider(SpoonacularClient spoonacularClient) {
         this.spoonacularClient = spoonacularClient;
     }
 
