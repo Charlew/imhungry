@@ -26,7 +26,7 @@ abstract class IntegrationSpec extends Specification implements SpoonacularStubs
 
     @Shared
     @ClassRule
-    public WireMockClassRule spoonacular = new WireMockClassRule(8089)
+    public WireMockClassRule wireMockRule = new WireMockClassRule(8089)
 
     @Autowired
     TestRestTemplate httpClient
