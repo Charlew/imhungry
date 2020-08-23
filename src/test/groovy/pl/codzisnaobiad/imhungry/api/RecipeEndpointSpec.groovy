@@ -20,7 +20,7 @@ class RecipeEndpointSpec extends IntegrationSpec {
         with(response.body) {
             name
             imageUrl
-            ingredients.size() == 2
+            ingredients.size() != 0
         }
     }
 
