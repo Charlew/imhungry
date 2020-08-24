@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 class QuotaPointsCounter {
+    // TODO: 25/08/2020 zmienic na atomic integer
     private int pointsCount;
 
     public int getPointsCount() {

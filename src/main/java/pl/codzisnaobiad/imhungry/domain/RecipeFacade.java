@@ -1,25 +1,18 @@
 package pl.codzisnaobiad.imhungry.domain;
 
-import pl.codzisnaobiad.imhungry.api.RecipeResponse;
-
-import java.util.List;
+import pl.codzisnaobiad.imhungry.api.request.RecipeRequestModel;
+import pl.codzisnaobiad.imhungry.api.response.RecipesResponse;
 
 public class RecipeFacade {
 
-    private static final int MAX_RECIPES = 10;
-
     private final RecipeProvider recipeProvider;
-    private final Randomizer<RecipeResponse> randomizer;
 
-    public RecipeFacade(RecipeProvider recipeProvider, Randomizer<RecipeResponse> randomizer) {
+    public RecipeFacade(RecipeProvider recipeProvider) {
         this.recipeProvider = recipeProvider;
-        this.randomizer = randomizer;
     }
 
-    public RecipeResponse getRandomRecipe(List<String> ingredients) {
-        var recipes = recipeProvider.getRecipes(ingredients, MAX_RECIPES);
-
-        return randomizer.randomize(recipes);
+    public RecipesResponse searchRecipes(RecipeRequestModel recipeRequestModel) {
+       return recipeProvider.searchRecipes(recipeRequestModel);
     }
 
 }

@@ -1,4 +1,4 @@
-package pl.codzisnaobiad.imhungry.api;
+package pl.codzisnaobiad.imhungry.api.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

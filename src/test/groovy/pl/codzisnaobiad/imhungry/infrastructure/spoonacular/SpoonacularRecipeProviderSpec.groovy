@@ -1,7 +1,6 @@
 package pl.codzisnaobiad.imhungry.infrastructure.spoonacular
 
-
-import pl.codzisnaobiad.imhungry.api.Ingredient
+import pl.codzisnaobiad.imhungry.api.request.RecipeRequestModel
 import spock.lang.Specification
 import spock.lang.Subject
 import spock.lang.Unroll
@@ -18,17 +17,21 @@ class SpoonacularRecipeProviderSpec extends Specification {
         given:
             spoonacularRecipeProvider = new SpoonacularRecipeProvider(spoonacularClient, quotaPointsCounter, quotaPointsLimit)
             quotaPointsCounter.setQuotaPoints(quotaPoints)
+        and:
+            def recipeRequestModel = RecipeRequestModel.builder().withIncludedIngredients(Set.of("bananas", "chocolate")).build()
+
         when:
-            def result = spoonacularRecipeProvider.getRecipes(_ as List<String>, 5)
+            def result = spoonacularRecipeProvider.searchRecipes(recipeRequestModel)
+
         then:
-            result[0].name =='Polish kebab'
-            result[0].imageUrl == 'test'
-            result[0].ingredients == [new Ingredient("Mutton", "test", 150f, "g"),
-                                      new Ingredient("Salad", "test", 50f, "g"),
-                                      new Ingredient("Garlic sauce", "test", 50f, "g")]
+            result.getRecipes()[0].id == '123'
+            result.getRecipes()[0].name == 'Polish kebab'
+            result.getRecipes()[0].imageUrl == 'test'
+
         where:
             quotaPointsLimit | quotaPoints
             149              | 150
             1                | 2
     }
+
 }

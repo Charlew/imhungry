@@ -5,16 +5,22 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.client.RestTemplate;
+import pl.codzisnaobiad.imhungry.api.request.RecipeRequestModel;
 
 import java.util.List;
 
 import static java.lang.Float.parseFloat;
 import static java.lang.String.join;
 import static java.util.Arrays.asList;
+import static java.util.Optional.ofNullable;
 import static org.springframework.web.util.UriComponentsBuilder.fromHttpUrl;
 
 class SpoonacularClient {
     private static final String POINTS_USED_HEADER = "X-API_QUOTA-USED";
+    private static final int MAX_RECIPES = 5;
+    private static final boolean INSTRUCTIONS_REQUIRED = true;
+    private static final boolean ADD_RECIPE_NUTRITION = true;
+    private static final String EMPTY_STRING = "";
 
     private final RestTemplate http;
     private final ObjectMapper objectMapper;
@@ -31,16 +37,24 @@ class SpoonacularClient {
         this.apiKey = apiKey;
     }
 
-    List<SearchRecipesResponse> searchRecipes(List<String> ingredients, int maxRecipes) {
+    List<SearchRecipesResponse> searchRecipes(RecipeRequestModel recipeRequestModel) {
         var uri = fromHttpUrl(baseUrl)
-                .pathSegment("recipes", "findByIngredients")
+                .pathSegment("recipes", "complexSearch")
                 .queryParam("apiKey", apiKey)
-                .queryParam("ingredients", mapToIngredientsQuery(ingredients))
-                .queryParam("number", maxRecipes)
-                .queryParam("ranking", SearchRecipeRanking.MAXIMIZE_USED_INGREDIENTS.getValue())
+                .queryParam("includeIngredients", mapToCommaSeparatedQuery(recipeRequestModel.getIncludedIngredients()))
+                .queryParam("excludeIngredients", mapToCommaSeparatedQuery(recipeRequestModel.getExcludedIngredients()))
+                .queryParam("intolerances", mapToCommaSeparatedQuery(recipeRequestModel.getIntolerances()))
+                .queryParam("query", ofNullable(recipeRequestModel.getNameQuery()).orElse(EMPTY_STRING))
+                .queryParam("diet", ofNullable(recipeRequestModel.getDiet()).orElse(EMPTY_STRING))
+                .queryParam("type", ofNullable(recipeRequestModel.getMealType()).orElse(EMPTY_STRING))
+//                .queryParam("sort", ofNullable(recipeRequestModel.getSortBy()).orElse(EMPTY_STRING)) <- dziwnie działa, do zbadania
+                .queryParam("number", MAX_RECIPES)
+                .queryParam("instructionsRequired", INSTRUCTIONS_REQUIRED)
+//                .queryParam("addRecipeNutrition", ADD_RECIPE_NUTRITION) <- bardzo dziwnie to działa, jak się doda to zwraca opis, wartości i kroki
                 .encode()
                 .build()
                 .toUri();
+
         HttpEntity<String> response = http.getForEntity(uri, String.class);
         setQuotaPoints(response.getHeaders());
         return asList(mapJsonToObject(response.getBody(), SearchRecipesResponse[].class));
@@ -53,8 +67,8 @@ class SpoonacularClient {
         }
     }
 
-    private String mapToIngredientsQuery(List<String> ingredients) {
-        return join(",", ingredients);
+    private String mapToCommaSeparatedQuery(Iterable<String> iterable) {
+        return join(",", iterable);
     }
 
     private <T> T mapJsonToObject(String json, Class<T> targetClass) {
@@ -63,23 +77,6 @@ class SpoonacularClient {
         } catch (JsonProcessingException exception) {
             throw new RuntimeException(exception);
         }
-    }
-
-    private enum SearchRecipeRanking {
-
-        MAXIMIZE_USED_INGREDIENTS(1),
-        MINIMIZE_MISSING_INGREDIENTS(2);
-
-        private final int value;
-
-        SearchRecipeRanking(int value) {
-            this.value = value;
-        }
-
-        public int getValue() {
-            return value;
-        }
-
     }
 
 }
