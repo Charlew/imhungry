@@ -11,19 +11,21 @@ import static java.util.stream.Collectors.toList;
 import static java.util.stream.Stream.concat;
 
 class SpoonacularRecipeProvider implements RecipeProvider {
-    private static final int LIMIT_OF_QUOTA_POINTS = 149;
-
     private final SpoonacularClient spoonacularClient;
     private final QuotaPointsCounter quotaPointsCounter;
+    private final int quotaPointsLimit;
 
-    SpoonacularRecipeProvider(SpoonacularClient spoonacularClient, QuotaPointsCounter quotaPointsCounter) {
+    SpoonacularRecipeProvider(SpoonacularClient spoonacularClient,
+                              QuotaPointsCounter quotaPointsCounter,
+                              int quotaPointsLimit) {
         this.spoonacularClient = spoonacularClient;
         this.quotaPointsCounter = quotaPointsCounter;
+        this.quotaPointsLimit = quotaPointsLimit;
     }
 
     @Override
     public List<RecipeResponse> getRecipes(List<String> ingredients, int maxRecipes) {
-        if (quotaPointsCounter.getPointsCount() >= LIMIT_OF_QUOTA_POINTS) {
+        if (quotaPointsCounter.getPointsCount() >= quotaPointsLimit) {
             return List.of(new FakeRecipeResponse());
         }
         return spoonacularClient.searchRecipes(ingredients, maxRecipes)

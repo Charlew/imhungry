@@ -15,8 +15,9 @@ class SpoonacularConfiguration {
 
     @Bean
     RecipeProvider spoonacularRecipeProvider(SpoonacularClient spoonacularClient,
-                                             QuotaPointsCounter quotaPointsCounter) {
-        return new SpoonacularRecipeProvider(spoonacularClient, quotaPointsCounter);
+                                             QuotaPointsCounter quotaPointsCounter,
+                                             @Value("${client.spoonacular.quota-points-limit:149}") int quotaPointsLimit) {
+        return new SpoonacularRecipeProvider(spoonacularClient, quotaPointsCounter, quotaPointsLimit);
     }
 
     @Bean
