@@ -22,7 +22,7 @@ class RecipeEndpoint {
     @GetMapping("/random")
     RecipeResponse getRandomRecipe(
             @ApiParam(name = "ingredient", allowMultiple = true, example = "apple")
-            @RequestParam(value = "ingredient", required = true) List<String> ingredients
+            @RequestParam(value = "ingredient") List<String> ingredients
     ) {
         return recipeFacade.getRandomRecipe(ingredients);
     }

@@ -3,24 +3,32 @@ package pl.codzisnaobiad.imhungry.infrastructure.spoonacular;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
+import static java.lang.Float.parseFloat;
+import static java.lang.Float.toHexString;
 import static java.lang.String.join;
 import static java.util.Arrays.asList;
+import static java.util.Arrays.sort;
 import static org.springframework.web.util.UriComponentsBuilder.fromHttpUrl;
 
 class SpoonacularClient {
+    private static final String POINTS_USED_HEADER = "X-API_QUOTA-USED";
 
     private final RestTemplate http;
     private final ObjectMapper objectMapper;
+    private final QuotaPointsCounter quotaPointsCounter;
     private final String baseUrl;
     private final String apiKey;
 
-    SpoonacularClient(RestTemplate http, ObjectMapper objectMapper, String baseUrl, String apiKey) {
+    SpoonacularClient(RestTemplate http, ObjectMapper objectMapper, String baseUrl, String apiKey,
+                      QuotaPointsCounter quotaPointsCounter) {
         this.http = http;
         this.objectMapper = objectMapper;
+        this.quotaPointsCounter = quotaPointsCounter;
         this.baseUrl = baseUrl;
         this.apiKey = apiKey;
     }
@@ -35,9 +43,16 @@ class SpoonacularClient {
                 .encode()
                 .build()
                 .toUri();
-
         HttpEntity<String> response = http.getForEntity(uri, String.class);
+        setQuotaPoints(response.getHeaders());
         return asList(mapJsonToObject(response.getBody(), SearchRecipesResponse[].class));
+    }
+
+    private void setQuotaPoints(HttpHeaders headers) {
+        var pointsCount = headers.get(POINTS_USED_HEADER);
+        if (pointsCount != null) {
+            quotaPointsCounter.setQuotaPoints((int) parseFloat(pointsCount.get(0)));
+        }
     }
 
     private String mapToIngredientsQuery(List<String> ingredients) {

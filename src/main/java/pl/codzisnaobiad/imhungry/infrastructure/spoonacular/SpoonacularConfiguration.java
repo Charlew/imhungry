@@ -21,10 +21,11 @@ class SpoonacularConfiguration {
     @Bean
     SpoonacularClient spoonacularClient(RestTemplate spoonacularRestTemplate,
                                         ObjectMapper objectMapper,
+                                        QuotaPointsCounter quotaPointsCounter,
                                         @Value("${client.spoonacular.base-url}") String baseUrl,
                                         @Value("${client.spoonacular.api-key}") String apiKey
     ) {
-        return new SpoonacularClient(spoonacularRestTemplate, objectMapper, baseUrl, apiKey);
+        return new SpoonacularClient(spoonacularRestTemplate, objectMapper, baseUrl, apiKey, quotaPointsCounter);
     }
 
     @Bean
