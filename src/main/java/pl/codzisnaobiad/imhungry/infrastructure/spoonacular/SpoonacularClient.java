@@ -9,10 +9,8 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 import static java.lang.Float.parseFloat;
-import static java.lang.Float.toHexString;
 import static java.lang.String.join;
 import static java.util.Arrays.asList;
-import static java.util.Arrays.sort;
 import static org.springframework.web.util.UriComponentsBuilder.fromHttpUrl;
 
 class SpoonacularClient {
