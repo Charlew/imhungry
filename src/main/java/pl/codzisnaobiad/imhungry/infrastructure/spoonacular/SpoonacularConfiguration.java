@@ -14,8 +14,9 @@ import java.time.Duration;
 class SpoonacularConfiguration {
 
     @Bean
-    RecipeProvider spoonacularRecipeProvider(SpoonacularClient spoonacularClient) {
-        return new SpoonacularRecipeProvider(spoonacularClient);
+    RecipeProvider spoonacularRecipeProvider(SpoonacularClient spoonacularClient,
+                                             QuotaPointsCounter quotaPointsCounter) {
+        return new SpoonacularRecipeProvider(spoonacularClient, quotaPointsCounter);
     }
 
     @Bean

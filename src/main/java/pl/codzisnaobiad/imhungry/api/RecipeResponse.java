@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import java.util.Objects;
 
-public final class RecipeResponse {
+public class RecipeResponse {
 
     private final String name;
     private final String imageUrl;

@@ -1,5 +1,6 @@
 package pl.codzisnaobiad.imhungry.infrastructure.spoonacular;
 
+import pl.codzisnaobiad.imhungry.api.FakeRecipeResponse;
 import pl.codzisnaobiad.imhungry.api.Ingredient;
 import pl.codzisnaobiad.imhungry.api.RecipeResponse;
 import pl.codzisnaobiad.imhungry.domain.RecipeProvider;
@@ -10,15 +11,21 @@ import static java.util.stream.Collectors.toList;
 import static java.util.stream.Stream.concat;
 
 class SpoonacularRecipeProvider implements RecipeProvider {
+    private static final int LIMIT_OF_QUOTA_POINTS = 149;
 
     private final SpoonacularClient spoonacularClient;
+    private final QuotaPointsCounter quotaPointsCounter;
 
-    SpoonacularRecipeProvider(SpoonacularClient spoonacularClient) {
+    SpoonacularRecipeProvider(SpoonacularClient spoonacularClient, QuotaPointsCounter quotaPointsCounter) {
         this.spoonacularClient = spoonacularClient;
+        this.quotaPointsCounter = quotaPointsCounter;
     }
 
     @Override
     public List<RecipeResponse> getRecipes(List<String> ingredients, int maxRecipes) {
+        if (quotaPointsCounter.getPointsCount() >= LIMIT_OF_QUOTA_POINTS) {
+            return List.of(new FakeRecipeResponse());
+        }
         return spoonacularClient.searchRecipes(ingredients, maxRecipes)
                 .stream()
                 .map(this::mapToRecipeResponse)
