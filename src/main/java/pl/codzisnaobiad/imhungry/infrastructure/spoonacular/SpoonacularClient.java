@@ -7,11 +7,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.web.client.RestTemplate;
 import pl.codzisnaobiad.imhungry.api.request.RecipeRequestModel;
 
-import java.util.List;
-
 import static java.lang.Float.parseFloat;
 import static java.lang.String.join;
-import static java.util.Arrays.asList;
 import static java.util.Optional.ofNullable;
 import static org.springframework.web.util.UriComponentsBuilder.fromHttpUrl;
 
@@ -37,7 +34,7 @@ class SpoonacularClient {
         this.apiKey = apiKey;
     }
 
-    List<SearchRecipesResponse> searchRecipes(RecipeRequestModel recipeRequestModel) {
+    SpoonacularSearchRecipesResponse searchRecipes(RecipeRequestModel recipeRequestModel) {
         var uri = fromHttpUrl(baseUrl)
                 .pathSegment("recipes", "complexSearch")
                 .queryParam("apiKey", apiKey)
@@ -57,7 +54,7 @@ class SpoonacularClient {
 
         HttpEntity<String> response = http.getForEntity(uri, String.class);
         setQuotaPoints(response.getHeaders());
-        return asList(mapJsonToObject(response.getBody(), SearchRecipesResponse[].class));
+        return mapJsonToObject(response.getBody(), SpoonacularSearchRecipesResponse.class);
     }
 
     private void setQuotaPoints(HttpHeaders headers) {

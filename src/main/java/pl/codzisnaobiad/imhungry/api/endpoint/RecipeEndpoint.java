@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.codzisnaobiad.imhungry.api.request.RecipeRequestModelMapper;
-import pl.codzisnaobiad.imhungry.api.response.RecipesResponse;
+import pl.codzisnaobiad.imhungry.api.response.SearchRecipesResponse;
 import pl.codzisnaobiad.imhungry.domain.RecipeFacade;
 
 @RestController
@@ -23,7 +23,7 @@ class RecipeEndpoint {
 
     // TODO: 25/08/2020 dodac swaggera do paramow
     @GetMapping("/search")
-    RecipesResponse searchRecipes(
+    SearchRecipesResponse searchRecipes(
             @RequestParam MultiValueMap<String, String> queryParameters
     ) {
         return recipeFacade.searchRecipes(recipeRequestModelMapper.toRequestModel(queryParameters));

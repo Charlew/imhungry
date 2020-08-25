@@ -10,10 +10,11 @@ import org.springframework.http.ResponseEntity
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.util.MultiValueMap
-import org.springframework.web.util.UriComponentsBuilder
 import pl.codzisnaobiad.imhungry.stubs.SpoonacularStubs
 import spock.lang.Shared
 import spock.lang.Specification
+
+import static pl.codzisnaobiad.imhungry.utils.ParamsMapper.queryParamsToImHungryUrl
 
 @ActiveProfiles("integration")
 @ContextConfiguration
@@ -33,14 +34,8 @@ abstract class IntegrationSpec extends Specification implements SpoonacularStubs
     @Autowired
     TestRestTemplate httpClient
 
-    def <T> ResponseEntity<T> get(String path, MultiValueMap<String, String> queryParameters, Class<T> responseType) {
-        def uri = UriComponentsBuilder
-                .fromHttpUrl(localUrl() + path)
-                .queryParams(queryParameters)
-                .build()
-                .toUri()
-
-        httpClient.getForEntity(uri, responseType)
+    def <T> ResponseEntity<T> get(String path, MultiValueMap<String, String> queryParameters, Class < T > responseType) {
+        httpClient.getForEntity(queryParamsToImHungryUrl(localUrl() + path, queryParameters), responseType)
     }
 
     protected String localUrl() {

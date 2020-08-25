@@ -18,7 +18,7 @@ class SpoonacularRecipeProviderSpec extends Specification {
             spoonacularRecipeProvider = new SpoonacularRecipeProvider(spoonacularClient, quotaPointsCounter, quotaPointsLimit)
             quotaPointsCounter.setQuotaPoints(quotaPoints)
         and:
-            def recipeRequestModel = RecipeRequestModel.builder().withIncludedIngredients(Set.of("bananas", "chocolate")).build()
+            def recipeRequestModel = RecipeRequestModel.builder().withIncludedIngredients(List.of("bananas", "chocolate")).build()
 
         when:
             def result = spoonacularRecipeProvider.searchRecipes(recipeRequestModel)

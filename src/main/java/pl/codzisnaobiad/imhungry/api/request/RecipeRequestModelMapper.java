@@ -3,9 +3,9 @@ package pl.codzisnaobiad.imhungry.api.request;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 
-import java.util.Set;
+import java.util.List;
 
-import static java.util.Collections.emptySet;
+import static java.util.Collections.emptyList;
 import static java.util.Optional.ofNullable;
 import static pl.codzisnaobiad.imhungry.api.request.RecipeQueryParameter.INCLUDED_INGREDIENT;
 import static pl.codzisnaobiad.imhungry.api.request.RecipeQueryParameter.EXCLUDED_INGREDIENT;
@@ -30,8 +30,8 @@ public class RecipeRequestModelMapper {
                 .build();
     }
 
-    private Set<String> extractValuesAsSet(MultiValueMap<String, String> queryParameters, String key) {
-        return ofNullable(queryParameters.get(key)).map(Set::copyOf).orElse(emptySet());
+    private List<String> extractValuesAsSet(MultiValueMap<String, String> queryParameters, String key) {
+        return ofNullable(queryParameters.get(key)).map(List::copyOf).orElse(emptyList());
     }
 
 }

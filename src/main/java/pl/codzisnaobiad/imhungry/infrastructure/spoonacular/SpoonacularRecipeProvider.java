@@ -1,9 +1,9 @@
 package pl.codzisnaobiad.imhungry.infrastructure.spoonacular;
 
 import pl.codzisnaobiad.imhungry.api.request.RecipeRequestModel;
-import pl.codzisnaobiad.imhungry.api.response.FakeRecipeResponse;
-import pl.codzisnaobiad.imhungry.api.response.RecipeResponse;
-import pl.codzisnaobiad.imhungry.api.response.RecipesResponse;
+import pl.codzisnaobiad.imhungry.api.response.FakeSearchRecipeResponse;
+import pl.codzisnaobiad.imhungry.api.response.SearchRecipeResponse;
+import pl.codzisnaobiad.imhungry.api.response.SearchRecipesResponse;
 import pl.codzisnaobiad.imhungry.domain.RecipeProvider;
 
 import java.util.List;
@@ -24,19 +24,19 @@ class SpoonacularRecipeProvider implements RecipeProvider {
     }
 
     @Override
-    public RecipesResponse searchRecipes(RecipeRequestModel recipeRequestModel) {
+    public SearchRecipesResponse searchRecipes(RecipeRequestModel recipeRequestModel) {
         if (quotaPointsCounter.getPointsCount() >= quotaPointsLimit) {
-            return new RecipesResponse(List.of(new FakeRecipeResponse()));
+            return new SearchRecipesResponse(List.of(new FakeSearchRecipeResponse()));
         }
 
-        return new RecipesResponse(spoonacularClient.searchRecipes(recipeRequestModel)
+        return new SearchRecipesResponse(spoonacularClient.searchRecipes(recipeRequestModel).getResults()
                 .stream()
-                .map(this::mapToRecipeResponse)
+                .map(this::mapToSearchRecipeResponse)
                 .collect(toList()));
     }
 
-    private RecipeResponse mapToRecipeResponse(SearchRecipesResponse recipe) {
-        return new RecipeResponse(recipe.getId(), recipe.getTitle(), recipe.getImage());
+    private SearchRecipeResponse mapToSearchRecipeResponse(SpoonacularSearchRecipesResponse.SpoonacularSearchRecipeResponse recipe) {
+        return new SearchRecipeResponse(recipe.getId(), recipe.getTitle(), recipe.getImage());
     }
 
 }

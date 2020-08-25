@@ -18,7 +18,6 @@ class RecipeRequestModelMapperSpec extends Specification {
             def queryParameters = new LinkedMultiValueMap()
             queryParameters.addAll("includedIngredient", ["banana", "chocolate"])
             queryParameters.add("excludedIngredient", "peanuts")
-            queryParameters.add("excludedIngredient", "peanuts")
             queryParameters.add("nameQuery", "ice cream")
             queryParameters.add("intolerance", "dairy")
             queryParameters.add("diet", "vegan")
@@ -32,9 +31,9 @@ class RecipeRequestModelMapperSpec extends Specification {
             notThrown(Exception)
 
         and:
-            recipeRequestModel.getIncludedIngredients() == Set.of("chocolate", "banana")
-            recipeRequestModel.getExcludedIngredients() == Set.of("peanuts")
-            recipeRequestModel.getIntolerances() == Set.of("dairy")
+            recipeRequestModel.getIncludedIngredients() == List.of("banana", "chocolate")
+            recipeRequestModel.getExcludedIngredients() == List.of("peanuts")
+            recipeRequestModel.getIntolerances() == List.of("dairy")
             recipeRequestModel.getNameQuery() == "ice cream"
             recipeRequestModel.getDiet() == "vegan"
             recipeRequestModel.getMealType() == "dessert"

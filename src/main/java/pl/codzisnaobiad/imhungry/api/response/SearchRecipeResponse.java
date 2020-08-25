@@ -5,16 +5,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
 
-public class RecipeResponse {
+public class SearchRecipeResponse {
 
     private final String id;
     private final String name;
     private final String imageUrl;
 
     @JsonCreator
-    public RecipeResponse(@JsonProperty("id") String id,
-                          @JsonProperty("name") String name,
-                          @JsonProperty("imageUrl") String imageUrl
+    public SearchRecipeResponse(@JsonProperty("id") String id,
+                                @JsonProperty("name") String name,
+                                @JsonProperty("imageUrl") String imageUrl
     ) {
         this.id = id;
         this.name = name;
@@ -37,7 +37,7 @@ public class RecipeResponse {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        RecipeResponse that = (RecipeResponse) o;
+        SearchRecipeResponse that = (SearchRecipeResponse) o;
         return Objects.equals(id, that.id) &&
                 Objects.equals(name, that.name) &&
                 Objects.equals(imageUrl, that.imageUrl);
@@ -50,7 +50,7 @@ public class RecipeResponse {
 
     @Override
     public String toString() {
-        return "RecipeResponse{" +
+        return "SearchRecipeResponse{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +

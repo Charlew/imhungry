@@ -4,14 +4,14 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.util.Assert;
 
-import java.util.Set;
+import java.util.List;
 import java.util.Objects;
 
 public class RecipeRequestModel {
 
-    private final Set<String> includedIngredients;
-    private final Set<String> excludedIngredients;
-    private final Set<String> intolerances;
+    private final List<String> includedIngredients;
+    private final List<String> excludedIngredients;
+    private final List<String> intolerances;
     private final String nameQuery;
     private final String diet;
     private final String mealType;
@@ -19,9 +19,9 @@ public class RecipeRequestModel {
 
     @JsonCreator
     public RecipeRequestModel(
-            @JsonProperty("includedIngredients") Set<String> includedIngredients,
-            @JsonProperty("excludedIngredients") Set<String> excludedIngredients,
-            @JsonProperty("intolerances") Set<String> intolerances,
+            @JsonProperty("includedIngredients") List<String> includedIngredients,
+            @JsonProperty("excludedIngredients") List<String> excludedIngredients,
+            @JsonProperty("intolerances") List<String> intolerances,
             @JsonProperty("nameQuery") String nameQuery,
             @JsonProperty("diet") String diet,
             @JsonProperty("mealType") String mealType,
@@ -36,15 +36,15 @@ public class RecipeRequestModel {
         this.sortBy = sortBy;
     }
 
-    public Set<String> getIncludedIngredients() {
+    public List<String> getIncludedIngredients() {
         return includedIngredients;
     }
 
-    public Set<String> getExcludedIngredients() {
+    public List<String> getExcludedIngredients() {
         return excludedIngredients;
     }
 
-    public Set<String> getIntolerances() {
+    public List<String> getIntolerances() {
         return intolerances;
     }
 
@@ -102,9 +102,9 @@ public class RecipeRequestModel {
 
     public static final class Builder {
 
-        private Set<String> includedIngredients;
-        private Set<String> excludedIngredients;
-        private Set<String> intolerances;
+        private List<String> includedIngredients;
+        private List<String> excludedIngredients;
+        private List<String> intolerances;
         private String nameQuery;
         private String diet;
         private String mealType;
@@ -113,18 +113,18 @@ public class RecipeRequestModel {
         private Builder() {
         }
 
-        public Builder withIncludedIngredients(Set<String> includedIngredients) {
+        public Builder withIncludedIngredients(List<String> includedIngredients) {
             Assert.notEmpty(includedIngredients, "At least one included ingredient is required");
             this.includedIngredients = includedIngredients;
             return this;
         }
 
-        public Builder withExcludedIngredients(Set<String> excludedIngredients) {
+        public Builder withExcludedIngredients(List<String> excludedIngredients) {
             this.excludedIngredients = excludedIngredients;
             return this;
         }
 
-        public Builder withIntolerances(Set<String> intolerances) {
+        public Builder withIntolerances(List<String> intolerances) {
             if (intolerances != null) {
                 for (String intolerance: intolerances ) {
                     SupportedIntolerance.assertIsValid(intolerance);

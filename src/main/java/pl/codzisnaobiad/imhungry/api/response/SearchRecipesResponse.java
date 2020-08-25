@@ -8,16 +8,16 @@ import java.util.List;
 import java.util.Objects;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class RecipesResponse {
+public class SearchRecipesResponse {
 
-    private final List<RecipeResponse> recipes;
+    private final List<SearchRecipeResponse> recipes;
 
     @JsonCreator
-    public RecipesResponse(@JsonProperty("recipes") List<RecipeResponse> recipes) {
+    public SearchRecipesResponse(@JsonProperty("recipes") List<SearchRecipeResponse> recipes) {
         this.recipes = recipes;
     }
 
-    public List<RecipeResponse> getRecipes() {
+    public List<SearchRecipeResponse> getRecipes() {
         return recipes;
     }
 
@@ -25,7 +25,7 @@ public class RecipesResponse {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        RecipesResponse that = (RecipesResponse) o;
+        SearchRecipesResponse that = (SearchRecipesResponse) o;
         return Objects.equals(recipes, that.recipes);
     }
 
@@ -36,7 +36,7 @@ public class RecipesResponse {
 
     @Override
     public String toString() {
-        return "RecipesResponse{" +
+        return "SearchRecipesResponse{" +
                 "recipes=" + recipes +
                 '}';
     }
