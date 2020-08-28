@@ -1,5 +1,0 @@
-client.spoonacular:
-  connection-timeout: PT0.5S
-  read-timeout: PT1S
-  base-url: "https://api.spoonacular.com"
-  api-key: "b72f9acf5b5d42fd8aac008d941671ef"
