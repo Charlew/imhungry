@@ -2,16 +2,21 @@ package pl.codzisnaobiad.imhungry.infrastructure.spoonacular;
 
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 @Component
 class QuotaPointsCounter {
-    // TODO: 25/08/2020 zmienic na atomic integer
-    private int pointsCount;
+    private final AtomicInteger pointsCount;
+
+    QuotaPointsCounter() {
+        pointsCount = new AtomicInteger();
+    }
 
     public int getPointsCount() {
-        return pointsCount;
+        return pointsCount.get();
     }
 
     public void setQuotaPoints(int pointsCount) {
-        this.pointsCount = pointsCount;
+        this.pointsCount.set(pointsCount);
     }
 }
