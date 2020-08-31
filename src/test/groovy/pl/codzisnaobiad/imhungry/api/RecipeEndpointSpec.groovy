@@ -3,6 +3,7 @@ package pl.codzisnaobiad.imhungry.api
 import org.springframework.http.HttpStatus
 import org.springframework.util.LinkedMultiValueMap
 import pl.codzisnaobiad.imhungry.IntegrationSpec
+import pl.codzisnaobiad.imhungry.api.response.RecipeInformationResponse
 import pl.codzisnaobiad.imhungry.api.response.SearchRecipesResponse
 
 class RecipeEndpointSpec extends IntegrationSpec {
@@ -26,6 +27,27 @@ class RecipeEndpointSpec extends IntegrationSpec {
         then:
             response.statusCode == HttpStatus.OK
             response.body.recipes.size() != 0
+    }
+
+    def "should get recipe information by recipe id"() {
+        given:
+            def id = "716429"
+        and:
+            stubSpoonacularGetRecipeInformationById(id, "SpoonacularGetRecipeInformationResponse.json")
+        when:
+            def response = httpClient.getForEntity("/recipes/$id/information", RecipeInformationResponse.class)
+        then:
+            response.statusCode.'2xxSuccessful'
+            response.body.with {
+                extendedIngredients.size() != 0
+                nutrients.size() != 0
+                imageUrl == "https://spoonacular.com/recipeImages/716429-556x370.jpg"
+                readyInMinutes == 45
+                servings == 2
+                title == "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs"
+                sourceUrl == "http://fullbellysisters.blogspot.com/2012/06/pasta-with-garlic-scallions-cauliflower.html"
+            }
+
     }
 
 }

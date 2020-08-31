@@ -7,6 +7,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.get
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo
 import static pl.codzisnaobiad.imhungry.utils.ParamsMapper.queryParamsToSpoonacularUrl
+import static pl.codzisnaobiad.imhungry.utils.ParamsMapper.recipeInformationQueryParamsToSpoonacularUrl
 
 trait SpoonacularStubs {
 
@@ -17,4 +18,10 @@ trait SpoonacularStubs {
                         .withBodyFile(fileName)))
     }
 
+    void stubSpoonacularGetRecipeInformationById(String id, String fileName) {
+        stubFor(get(urlEqualTo("/recipes/$id/information" + recipeInformationQueryParamsToSpoonacularUrl()))
+            .willReturn(aResponse()
+                .withStatus(200)
+                .withBodyFile(fileName)))
+    }
 }

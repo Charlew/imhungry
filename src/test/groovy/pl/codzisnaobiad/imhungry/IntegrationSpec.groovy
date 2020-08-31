@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.util.MultiValueMap
+import pl.codzisnaobiad.imhungry.domain.RecipeProvider
 import pl.codzisnaobiad.imhungry.stubs.SpoonacularStubs
 import spock.lang.Shared
 import spock.lang.Specification
