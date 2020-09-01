@@ -2,12 +2,14 @@ package pl.codzisnaobiad.imhungry.api.endpoint;
 
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.codzisnaobiad.imhungry.api.request.RecipeRequestModelMapper;
 import pl.codzisnaobiad.imhungry.api.response.SearchRecipesResponse;
 import pl.codzisnaobiad.imhungry.domain.RecipeFacade;
+import pl.codzisnaobiad.imhungry.api.response.RecipeIngredientsResponse;
 
 @RestController
 @RequestMapping("/recipes")
@@ -27,6 +29,11 @@ class RecipeEndpoint {
             @RequestParam MultiValueMap<String, String> queryParameters
     ) {
         return recipeFacade.searchRecipes(recipeRequestModelMapper.toRequestModel(queryParameters));
+    }
+
+    @GetMapping("/{id}/ingredients")
+    RecipeIngredientsResponse getRecipeIngredients(@PathVariable("id") String recipeId) {
+        return recipeFacade.getRecipeIngredients(recipeId);
     }
 
 }

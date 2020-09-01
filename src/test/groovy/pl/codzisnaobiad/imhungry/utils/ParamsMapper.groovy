@@ -39,6 +39,14 @@ class ParamsMapper {
                 .toString()
     }
 
+    static String recipeInformationQueryParamsToSpoonacularUrl() {
+        UriComponentsBuilder.newInstance()
+            .queryParam("includeNutrition", true)
+            .queryParam("apiKey", "API_KEY")
+            .build()
+            .toString()
+    }
+
     static List<String> optional(List<String> params) {
         return ofNullable(params).orElse(Collections.emptyList())
     }

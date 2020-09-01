@@ -3,28 +3,22 @@ package pl.codzisnaobiad.imhungry.api.response;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
-@JsonDeserialize(builder = Ingredient.Builder.class)
-public final class Ingredient {
-    private final int id;
-    private final String name;
+@JsonDeserialize(builder = Nutrient.Builder.class)
+public final class Nutrient {
+    private final String title;
     private final float amount;
     private final String unit;
-    private final String imageUrl;
+    private final float percentOfDailyNeeds;
 
-    Ingredient(Builder builder) {
-        this.id = builder.id;
-        this.name = builder.name;
+    Nutrient(Builder builder) {
+        this.title = builder.title;
         this.amount = builder.amount;
         this.unit = builder.unit;
-        this.imageUrl = builder.imageUrl;
+        this.percentOfDailyNeeds = builder.percentOfDailyNeeds;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
     public float getAmount() {
@@ -35,8 +29,8 @@ public final class Ingredient {
         return unit;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public float getPercentOfDailyNeeds() {
+        return percentOfDailyNeeds;
     }
 
     public static Builder newBuilder() {
@@ -45,26 +39,17 @@ public final class Ingredient {
 
     @JsonPOJOBuilder
     public static final class Builder {
-        private int id;
-        private String name;
+        private String title;
         private float amount;
         private String unit;
-        private String imageUrl;
+        private float percentOfDailyNeeds;
 
         private Builder() {
         }
 
-        public static Builder anExtendedIngredient() {
-            return new Builder();
-        }
 
-        public Builder withId(int id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder withName(String name) {
-            this.name = name;
+        public Builder withTitle(String title) {
+            this.title = title;
             return this;
         }
 
@@ -78,13 +63,13 @@ public final class Ingredient {
             return this;
         }
 
-        public Builder withImageUrl(String imageUrl) {
-            this.imageUrl = imageUrl;
+        public Builder withPercentOfDailyNeeds(float percentOfDailyNeeds) {
+            this.percentOfDailyNeeds = percentOfDailyNeeds;
             return this;
         }
 
-        public Ingredient build() {
-            return new Ingredient(this);
+        public Nutrient build() {
+            return new Nutrient(this);
         }
     }
 }
