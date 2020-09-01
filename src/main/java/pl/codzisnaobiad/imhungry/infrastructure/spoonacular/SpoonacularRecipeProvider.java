@@ -1,12 +1,12 @@
 package pl.codzisnaobiad.imhungry.infrastructure.spoonacular;
 
 import pl.codzisnaobiad.imhungry.api.request.RecipeRequestModel;
-import pl.codzisnaobiad.imhungry.api.response.ExtendedIngredient;
+import pl.codzisnaobiad.imhungry.api.response.Ingredient;
 import pl.codzisnaobiad.imhungry.api.response.FakeSearchRecipeResponse;
 import pl.codzisnaobiad.imhungry.api.response.Nutrient;
 import pl.codzisnaobiad.imhungry.api.response.SearchRecipeResponse;
 import pl.codzisnaobiad.imhungry.api.response.SearchRecipesResponse;
-import pl.codzisnaobiad.imhungry.api.response.RecipeInformationResponse;
+import pl.codzisnaobiad.imhungry.api.response.RecipeIngredientsResponse;
 import pl.codzisnaobiad.imhungry.domain.RecipeProvider;
 
 import java.util.List;
@@ -39,22 +39,19 @@ class SpoonacularRecipeProvider implements RecipeProvider {
     }
 
     @Override
-    public RecipeInformationResponse getRecipeInformationById(int id) {
+    public RecipeIngredientsResponse getRecipeIngredients(String id) {
         var recipeInformation = spoonacularClient.getRecipeInformationById(id);
         return prepareRecipeInformationResponse(recipeInformation);
     }
 
-    private static RecipeInformationResponse prepareRecipeInformationResponse(SpoonacularGetRecipeInformationResponse recipeInformation) {
+    private static RecipeIngredientsResponse prepareRecipeInformationResponse(SpoonacularGetRecipeInformationResponse recipeInformation) {
         var extendedIngredients = prepareExtendedIngredients(recipeInformation.getExtendedIngredients());
         var nutrients = prepareNutrients(recipeInformation.getNutrition().getNutrients());
-        return RecipeInformationResponse.newBuilder()
+        return RecipeIngredientsResponse.newBuilder()
             .withExtendedIngredients(extendedIngredients)
-            .withImageUrl(recipeInformation.getImageUrl())
             .withNutrients(nutrients)
             .withReadyInMinutes(recipeInformation.getReadyInMinutes())
             .withServings(recipeInformation.getServings())
-            .withSourceUrl(recipeInformation.getSourceUrl())
-            .withTitle(recipeInformation.getTitle())
             .build();
     }
 
@@ -73,22 +70,23 @@ class SpoonacularRecipeProvider implements RecipeProvider {
             .build();
     }
 
-    private static List<ExtendedIngredient> prepareExtendedIngredients(
+    private static List<Ingredient> prepareExtendedIngredients(
         List<SpoonacularGetRecipeInformationResponse.ExtendedIngredient> extendedIngredients
     ) {
         return extendedIngredients.stream()
-            .map(SpoonacularRecipeProvider::mapToExtendedIngredient)
+            .map(SpoonacularRecipeProvider::mapToIngredient)
             .collect(toList());
     }
 
-    private static ExtendedIngredient mapToExtendedIngredient(
+    private static Ingredient mapToIngredient(
         SpoonacularGetRecipeInformationResponse.ExtendedIngredient extendedIngredient
     ) {
-        return ExtendedIngredient.newBuilder()
+        return Ingredient.newBuilder()
             .withId(extendedIngredient.getId())
             .withAmount(extendedIngredient.getAmount())
+            // TODO: 01.09.2020 Generowanie imageUrl
+            .withImageUrl(extendedIngredient.getImage())
             .withName(extendedIngredient.getName())
-            .withOriginal(extendedIngredient.getOriginal())
             .withUnit(extendedIngredient.getUnit())
             .build();
     }

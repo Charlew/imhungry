@@ -1,7 +1,7 @@
 package pl.codzisnaobiad.imhungry.domain;
 
 import pl.codzisnaobiad.imhungry.api.request.RecipeRequestModel;
-import pl.codzisnaobiad.imhungry.api.response.RecipeInformationResponse;
+import pl.codzisnaobiad.imhungry.api.response.RecipeIngredientsResponse;
 import pl.codzisnaobiad.imhungry.api.response.SearchRecipesResponse;
 
 public class RecipeFacade {
@@ -16,7 +16,7 @@ public class RecipeFacade {
        return recipeProvider.searchRecipes(recipeRequestModel);
     }
 
-    public RecipeInformationResponse getRecipeInformationById(int id) {
-        return recipeProvider.getRecipeInformationById(id);
+    public RecipeIngredientsResponse getRecipeIngredients(String recipeId) {
+        return recipeProvider.getRecipeIngredients(recipeId);
     }
 }

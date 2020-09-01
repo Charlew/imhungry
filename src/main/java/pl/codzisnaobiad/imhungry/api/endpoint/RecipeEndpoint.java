@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.codzisnaobiad.imhungry.api.request.RecipeRequestModelMapper;
 import pl.codzisnaobiad.imhungry.api.response.SearchRecipesResponse;
 import pl.codzisnaobiad.imhungry.domain.RecipeFacade;
-import pl.codzisnaobiad.imhungry.api.response.RecipeInformationResponse;
+import pl.codzisnaobiad.imhungry.api.response.RecipeIngredientsResponse;
 
 @RestController
 @RequestMapping("/recipes")
@@ -31,9 +31,9 @@ class RecipeEndpoint {
         return recipeFacade.searchRecipes(recipeRequestModelMapper.toRequestModel(queryParameters));
     }
 
-    @GetMapping("/{id}/information")
-    RecipeInformationResponse recipeInformation(@PathVariable int id) {
-        return recipeFacade.getRecipeInformationById(id);
+    @GetMapping("/{id}/ingredients")
+    RecipeIngredientsResponse getRecipeIngredients(@PathVariable("id") String recipeId) {
+        return recipeFacade.getRecipeIngredients(recipeId);
     }
 
 }

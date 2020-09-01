@@ -1,33 +1,30 @@
 package pl.codzisnaobiad.imhungry.api.response;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
-import java.util.Objects;
-
+@JsonDeserialize(builder = Ingredient.Builder.class)
 public final class Ingredient {
-
+    private final int id;
     private final String name;
-    private final String imageUrl;
     private final float amount;
     private final String unit;
+    private final String imageUrl;
 
-    public Ingredient(@JsonProperty("name") String name,
-                      @JsonProperty("imageUrl") String imageUrl,
-                      @JsonProperty("amount") float amount,
-                      @JsonProperty("unit") String unit
-    ) {
-        this.name = name;
-        this.imageUrl = imageUrl;
-        this.amount = amount;
-        this.unit = unit;
+    Ingredient(Builder builder) {
+        this.id = builder.id;
+        this.name = builder.name;
+        this.amount = builder.amount;
+        this.unit = builder.unit;
+        this.imageUrl = builder.imageUrl;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {
         return name;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
     }
 
     public float getAmount() {
@@ -38,30 +35,56 @@ public final class Ingredient {
         return unit;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Ingredient that = (Ingredient) o;
-        return Float.compare(that.amount, amount) == 0 &&
-                Objects.equals(name, that.name) &&
-                Objects.equals(imageUrl, that.imageUrl) &&
-                Objects.equals(unit, that.unit);
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, imageUrl, amount, unit);
+    public static Builder newBuilder() {
+        return new Builder();
     }
 
-    @Override
-    public String toString() {
-        return "Ingredient{" +
-                "name='" + name + '\'' +
-                ", imageUrl='" + imageUrl + '\'' +
-                ", amount=" + amount +
-                ", unit='" + unit + '\'' +
-                '}';
-    }
+    @JsonPOJOBuilder
+    public static final class Builder {
+        private int id;
+        private String name;
+        private float amount;
+        private String unit;
+        private String imageUrl;
 
+        private Builder() {
+        }
+
+        public static Builder anExtendedIngredient() {
+            return new Builder();
+        }
+
+        public Builder withId(int id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder withName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder withAmount(float amount) {
+            this.amount = amount;
+            return this;
+        }
+
+        public Builder withUnit(String unit) {
+            this.unit = unit;
+            return this;
+        }
+
+        public Builder withImageUrl(String imageUrl) {
+            this.imageUrl = imageUrl;
+            return this;
+        }
+
+        public Ingredient build() {
+            return new Ingredient(this);
+        }
+    }
 }
