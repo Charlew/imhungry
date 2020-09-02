@@ -3,7 +3,6 @@ package pl.codzisnaobiad.imhungry.infrastructure.spoonacular;
 import pl.codzisnaobiad.imhungry.api.request.RecipeRequestModel;
 import pl.codzisnaobiad.imhungry.api.response.Ingredient;
 import pl.codzisnaobiad.imhungry.api.response.FakeSearchRecipeResponse;
-import pl.codzisnaobiad.imhungry.api.response.Nutrient;
 import pl.codzisnaobiad.imhungry.api.response.SearchRecipeResponse;
 import pl.codzisnaobiad.imhungry.api.response.SearchRecipesResponse;
 import pl.codzisnaobiad.imhungry.api.response.RecipeIngredientsResponse;
@@ -16,13 +15,16 @@ import static java.util.stream.Collectors.toList;
 class SpoonacularRecipeProvider implements RecipeProvider {
     private final SpoonacularClient spoonacularClient;
     private final QuotaPointsCounter quotaPointsCounter;
+    private final NutrientsPicker nutrientsPicker;
     private final int quotaPointsLimit;
 
     SpoonacularRecipeProvider(SpoonacularClient spoonacularClient,
                               QuotaPointsCounter quotaPointsCounter,
+                              NutrientsPicker nutrientsPicker,
                               int quotaPointsLimit) {
         this.spoonacularClient = spoonacularClient;
         this.quotaPointsCounter = quotaPointsCounter;
+        this.nutrientsPicker = nutrientsPicker;
         this.quotaPointsLimit = quotaPointsLimit;
     }
 
@@ -44,29 +46,13 @@ class SpoonacularRecipeProvider implements RecipeProvider {
         return prepareRecipeInformationResponse(recipeInformation);
     }
 
-    private static RecipeIngredientsResponse prepareRecipeInformationResponse(SpoonacularGetRecipeInformationResponse recipeInformation) {
+    private RecipeIngredientsResponse prepareRecipeInformationResponse(SpoonacularGetRecipeInformationResponse recipeInformation) {
         var extendedIngredients = prepareExtendedIngredients(recipeInformation.getExtendedIngredients());
-        var nutrients = prepareNutrients(recipeInformation.getNutrition().getNutrients());
         return RecipeIngredientsResponse.newBuilder()
             .withExtendedIngredients(extendedIngredients)
-            .withNutrients(nutrients)
+            .withNutrients(nutrientsPicker.pickSupportedNutrients(recipeInformation.getNutrition().getNutrients()))
             .withReadyInMinutes(recipeInformation.getReadyInMinutes())
             .withServings(recipeInformation.getServings())
-            .build();
-    }
-
-    private static List<Nutrient> prepareNutrients(List<SpoonacularGetRecipeInformationResponse.Nutrition.Nutrient> nutrients) {
-        return nutrients.stream()
-            .map(SpoonacularRecipeProvider::mapToNutrient)
-            .collect(toList());
-    }
-
-    private static Nutrient mapToNutrient(SpoonacularGetRecipeInformationResponse.Nutrition.Nutrient nutrient) {
-        return Nutrient.newBuilder()
-            .withAmount(nutrient.getAmount())
-            .withPercentOfDailyNeeds(nutrient.getPercentOfDailyNeeds())
-            .withTitle(nutrient.getTitle())
-            .withUnit(nutrient.getUnit())
             .build();
     }
 

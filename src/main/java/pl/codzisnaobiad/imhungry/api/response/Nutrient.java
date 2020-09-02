@@ -3,34 +3,46 @@ package pl.codzisnaobiad.imhungry.api.response;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
+import java.util.Objects;
+
 @JsonDeserialize(builder = Nutrient.Builder.class)
 public final class Nutrient {
-    private final String title;
+    private final String name;
     private final float amount;
-    private final String unit;
-    private final float percentOfDailyNeeds;
 
     Nutrient(Builder builder) {
-        this.title = builder.title;
+        this.name = builder.name;
         this.amount = builder.amount;
-        this.unit = builder.unit;
-        this.percentOfDailyNeeds = builder.percentOfDailyNeeds;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
     public float getAmount() {
         return amount;
     }
 
-    public String getUnit() {
-        return unit;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Nutrient nutrient = (Nutrient) o;
+        return Float.compare(nutrient.amount, amount) == 0 &&
+                Objects.equals(name, nutrient.name);
     }
 
-    public float getPercentOfDailyNeeds() {
-        return percentOfDailyNeeds;
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, amount);
+    }
+
+    @Override
+    public String toString() {
+        return "Nutrient{" +
+                "name='" + name + '\'' +
+                ", amount=" + amount +
+                '}';
     }
 
     public static Builder newBuilder() {
@@ -39,32 +51,19 @@ public final class Nutrient {
 
     @JsonPOJOBuilder
     public static final class Builder {
-        private String title;
+        private String name;
         private float amount;
-        private String unit;
-        private float percentOfDailyNeeds;
 
         private Builder() {
         }
 
-
-        public Builder withTitle(String title) {
-            this.title = title;
+        public Builder withName(String name) {
+            this.name = name;
             return this;
         }
 
         public Builder withAmount(float amount) {
             this.amount = amount;
-            return this;
-        }
-
-        public Builder withUnit(String unit) {
-            this.unit = unit;
-            return this;
-        }
-
-        public Builder withPercentOfDailyNeeds(float percentOfDailyNeeds) {
-            this.percentOfDailyNeeds = percentOfDailyNeeds;
             return this;
         }
 
