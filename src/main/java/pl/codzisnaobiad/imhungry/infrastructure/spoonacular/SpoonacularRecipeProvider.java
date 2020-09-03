@@ -23,7 +23,8 @@ class SpoonacularRecipeProvider implements RecipeProvider {
                               QuotaPointsCounter quotaPointsCounter,
                               NutrientsPicker nutrientsPicker,
                               UrlGenerator urlGenerator,
-                              int quotaPointsLimit) {
+                              int quotaPointsLimit
+    ) {
         this.spoonacularClient = spoonacularClient;
         this.quotaPointsCounter = quotaPointsCounter;
         this.nutrientsPicker = nutrientsPicker;

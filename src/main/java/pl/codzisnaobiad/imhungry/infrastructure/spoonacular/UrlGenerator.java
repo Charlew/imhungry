@@ -6,13 +6,13 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Component
 class UrlGenerator {
 
-    private static final String baseImageUrl = "https://spoonacular.com/cdn/ingredients_";
-    private static final String defaultImageSize = "250x250";
+    private static final String BASE_IMAGE_URL = "https://spoonacular.com/cdn/ingredients_";
+    private static final String DEFAULT_IMAGE_SIZE = "250x250";
 
     String generateImageUrl(String imageUrlSuffix) {
         return UriComponentsBuilder
-            .fromHttpUrl(baseImageUrl)
-            .path(defaultImageSize)
+            .fromHttpUrl(BASE_IMAGE_URL)
+            .path(DEFAULT_IMAGE_SIZE)
             .pathSegment(imageUrlSuffix)
             .encode()
             .build()
