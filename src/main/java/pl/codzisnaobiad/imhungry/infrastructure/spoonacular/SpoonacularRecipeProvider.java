@@ -16,15 +16,18 @@ class SpoonacularRecipeProvider implements RecipeProvider {
     private final SpoonacularClient spoonacularClient;
     private final QuotaPointsCounter quotaPointsCounter;
     private final NutrientsPicker nutrientsPicker;
+    private final UrlGenerator urlGenerator;
     private final int quotaPointsLimit;
 
     SpoonacularRecipeProvider(SpoonacularClient spoonacularClient,
                               QuotaPointsCounter quotaPointsCounter,
                               NutrientsPicker nutrientsPicker,
+                              UrlGenerator urlGenerator,
                               int quotaPointsLimit) {
         this.spoonacularClient = spoonacularClient;
         this.quotaPointsCounter = quotaPointsCounter;
         this.nutrientsPicker = nutrientsPicker;
+        this.urlGenerator = urlGenerator;
         this.quotaPointsLimit = quotaPointsLimit;
     }
 
@@ -47,31 +50,29 @@ class SpoonacularRecipeProvider implements RecipeProvider {
     }
 
     private RecipeIngredientsResponse prepareRecipeInformationResponse(SpoonacularGetRecipeInformationResponse recipeInformation) {
-        var extendedIngredients = prepareExtendedIngredients(recipeInformation.getExtendedIngredients());
         return RecipeIngredientsResponse.newBuilder()
-            .withExtendedIngredients(extendedIngredients)
+            .withIngredients(prepareIngredients(recipeInformation.getExtendedIngredients()))
             .withNutrients(nutrientsPicker.pickSupportedNutrients(recipeInformation.getNutrition().getNutrients()))
             .withReadyInMinutes(recipeInformation.getReadyInMinutes())
             .withServings(recipeInformation.getServings())
             .build();
     }
 
-    private static List<Ingredient> prepareExtendedIngredients(
+    private List<Ingredient> prepareIngredients(
         List<SpoonacularGetRecipeInformationResponse.ExtendedIngredient> extendedIngredients
     ) {
         return extendedIngredients.stream()
-            .map(SpoonacularRecipeProvider::mapToIngredient)
+            .map(this::mapToIngredient)
             .collect(toList());
     }
 
-    private static Ingredient mapToIngredient(
+    private Ingredient mapToIngredient(
         SpoonacularGetRecipeInformationResponse.ExtendedIngredient extendedIngredient
     ) {
         return Ingredient.newBuilder()
             .withId(extendedIngredient.getId())
             .withAmount(extendedIngredient.getAmount())
-            // TODO: 01.09.2020 Generowanie imageUrl
-            .withImageUrl(extendedIngredient.getImage())
+            .withImageUrl(urlGenerator.generateImageUrl(extendedIngredient.getImage()))
             .withName(extendedIngredient.getName())
             .withUnit(extendedIngredient.getUnit())
             .build();
