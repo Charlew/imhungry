@@ -4,7 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
+import pl.codzisnaobiad.imhungry.api.exception.SpoonacularCommunicationException;
 import pl.codzisnaobiad.imhungry.api.request.RecipeRequestModel;
 
 import java.net.URI;
@@ -86,9 +89,13 @@ class SpoonacularClient {
     }
 
     private HttpEntity<String> executeGetRequest(URI uri) {
-        var response = http.getForEntity(uri, String.class);
-        setQuotaPoints(response.getHeaders());
-        return response;
+        try {
+            var response = http.getForEntity(uri, String.class);
+            setQuotaPoints(response.getHeaders());
+            return response;
+        } catch (HttpClientErrorException | HttpServerErrorException e) {
+            throw new SpoonacularCommunicationException(e.getMessage());
+        }
     }
 
     private void setQuotaPoints(HttpHeaders headers) {
