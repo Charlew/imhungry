@@ -66,14 +66,14 @@ final class SpoonacularGetRecipeInformationResponse {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     static final class ExtendedIngredient {
-        private final int id;
+        private final String id;
         private final String name;
         private final float amount;
         private final String unit;
         private final String image;
 
         @JsonCreator
-        ExtendedIngredient(@JsonProperty("id") int id,
+        ExtendedIngredient(@JsonProperty("id") String id,
                            @JsonProperty("name") String name,
                            @JsonProperty("amount") float amount,
                            @JsonProperty("unit") String unit,
@@ -85,7 +85,7 @@ final class SpoonacularGetRecipeInformationResponse {
             this.image = image;
         }
 
-        public int getId() {
+        public String getId() {
             return id;
         }
 

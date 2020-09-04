@@ -12,7 +12,7 @@ public class RecipeIngredientsResponse {
     private final int servings;
     private final List<Nutrient> nutrients;
 
-    public RecipeIngredientsResponse(Builder builder) {
+    private RecipeIngredientsResponse(Builder builder) {
         this.ingredients = builder.ingredients;
         this.readyInMinutes = builder.readyInMinutes;
         this.servings = builder.servings;

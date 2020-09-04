@@ -10,7 +10,7 @@ public final class Nutrient {
     private final String name;
     private final float amount;
 
-    Nutrient(Builder builder) {
+    private Nutrient(Builder builder) {
         this.name = builder.name;
         this.amount = builder.amount;
     }

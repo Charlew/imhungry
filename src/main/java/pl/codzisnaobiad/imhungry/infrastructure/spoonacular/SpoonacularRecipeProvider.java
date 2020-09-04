@@ -2,7 +2,6 @@ package pl.codzisnaobiad.imhungry.infrastructure.spoonacular;
 
 import pl.codzisnaobiad.imhungry.api.request.RecipeRequestModel;
 import pl.codzisnaobiad.imhungry.api.response.Ingredient;
-import pl.codzisnaobiad.imhungry.api.response.FakeSearchRecipeResponse;
 import pl.codzisnaobiad.imhungry.api.response.SearchRecipeResponse;
 import pl.codzisnaobiad.imhungry.api.response.SearchRecipesResponse;
 import pl.codzisnaobiad.imhungry.api.response.RecipeIngredientsResponse;
@@ -13,18 +12,21 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 class SpoonacularRecipeProvider implements RecipeProvider {
+    private final RecipeProvider fakeRecipeProvider;
     private final SpoonacularClient spoonacularClient;
     private final QuotaPointsCounter quotaPointsCounter;
     private final NutrientsPicker nutrientsPicker;
     private final UrlGenerator urlGenerator;
     private final int quotaPointsLimit;
 
-    SpoonacularRecipeProvider(SpoonacularClient spoonacularClient,
+    SpoonacularRecipeProvider(RecipeProvider fakeRecipeProvider,
+                              SpoonacularClient spoonacularClient,
                               QuotaPointsCounter quotaPointsCounter,
                               NutrientsPicker nutrientsPicker,
                               UrlGenerator urlGenerator,
                               int quotaPointsLimit
     ) {
+        this.fakeRecipeProvider = fakeRecipeProvider;
         this.spoonacularClient = spoonacularClient;
         this.quotaPointsCounter = quotaPointsCounter;
         this.nutrientsPicker = nutrientsPicker;
@@ -35,7 +37,7 @@ class SpoonacularRecipeProvider implements RecipeProvider {
     @Override
     public SearchRecipesResponse searchRecipes(RecipeRequestModel recipeRequestModel) {
         if (quotaPointsCounter.getPointsCount() >= quotaPointsLimit) {
-            return new SearchRecipesResponse(List.of(new FakeSearchRecipeResponse()));
+            return fakeRecipeProvider.searchRecipes(recipeRequestModel);
         }
         var recipes = spoonacularClient.searchRecipes(recipeRequestModel).getResults()
             .stream()
@@ -46,6 +48,9 @@ class SpoonacularRecipeProvider implements RecipeProvider {
 
     @Override
     public RecipeIngredientsResponse getRecipeIngredients(String id) {
+        if (quotaPointsCounter.getPointsCount() >= quotaPointsLimit) {
+            return fakeRecipeProvider.getRecipeIngredients(id);
+        }
         var recipeInformation = spoonacularClient.getRecipeInformationById(id);
         return prepareRecipeInformationResponse(recipeInformation);
     }

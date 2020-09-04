@@ -5,13 +5,13 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 @JsonDeserialize(builder = Ingredient.Builder.class)
 public final class Ingredient {
-    private final int id;
+    private final String id;
     private final String name;
     private final float amount;
     private final String unit;
     private final String imageUrl;
 
-    Ingredient(Builder builder) {
+    private Ingredient(Builder builder) {
         this.id = builder.id;
         this.name = builder.name;
         this.amount = builder.amount;
@@ -19,7 +19,7 @@ public final class Ingredient {
         this.imageUrl = builder.imageUrl;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -45,7 +45,7 @@ public final class Ingredient {
 
     @JsonPOJOBuilder
     public static final class Builder {
-        private int id;
+        private String id;
         private String name;
         private float amount;
         private String unit;
@@ -54,11 +54,7 @@ public final class Ingredient {
         private Builder() {
         }
 
-        public static Builder anExtendedIngredient() {
-            return new Builder();
-        }
-
-        public Builder withId(int id) {
+        public Builder withId(String id) {
             this.id = id;
             return this;
         }
