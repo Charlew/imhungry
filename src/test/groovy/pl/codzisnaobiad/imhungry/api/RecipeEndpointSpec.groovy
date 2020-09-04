@@ -39,7 +39,7 @@ class RecipeEndpointSpec extends IntegrationSpec {
         then:
             response.statusCode.'2xxSuccessful'
             response.body.with {
-                extendedIngredients.size() != 0
+                ingredients.size() != 0
                 nutrients.size() != 0
                 readyInMinutes == 45
                 servings == 2

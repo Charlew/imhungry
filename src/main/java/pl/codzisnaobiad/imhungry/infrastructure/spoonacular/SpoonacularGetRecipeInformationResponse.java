@@ -6,6 +6,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
+import static java.util.Collections.emptyList;
+import static java.util.Optional.ofNullable;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 final class SpoonacularGetRecipeInformationResponse {
     private final List<ExtendedIngredient> extendedIngredients;
@@ -109,7 +112,7 @@ final class SpoonacularGetRecipeInformationResponse {
 
         @JsonCreator
          Nutrition(@JsonProperty("nutrients") List<Nutrient> nutrients) {
-             this.nutrients = nutrients;
+             this.nutrients = ofNullable(nutrients).map(List::copyOf).orElse(emptyList());
          }
 
         public List<Nutrient> getNutrients() {

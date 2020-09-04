@@ -19,7 +19,7 @@ public class RecipeIngredientsResponse {
         this.nutrients = builder.nutrients;
     }
 
-    public List<Ingredient> getExtendedIngredients() {
+    public List<Ingredient> getIngredients() {
         return ingredients;
     }
 
@@ -49,7 +49,7 @@ public class RecipeIngredientsResponse {
         private Builder() {
         }
 
-        public Builder withExtendedIngredients(List<Ingredient> ingredients) {
+        public Builder withIngredients(List<Ingredient> ingredients) {
             this.ingredients = ingredients;
             return this;
         }
