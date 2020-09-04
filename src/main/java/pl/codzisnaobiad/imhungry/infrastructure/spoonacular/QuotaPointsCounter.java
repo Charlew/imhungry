@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Component
-class QuotaPointsCounter {
+public class QuotaPointsCounter {
 
     private final AtomicInteger pointsCount;
     private final int quotaPointsLimit;
@@ -14,6 +14,10 @@ class QuotaPointsCounter {
     QuotaPointsCounter(@Value("${client.spoonacular.quota-points-limit:149}") int quotaPointsLimit) {
         this.quotaPointsLimit = quotaPointsLimit;
         this.pointsCount = new AtomicInteger();
+    }
+
+    public int getQuotaPoints() {
+        return pointsCount.get();
     }
 
     public void setQuotaPoints(int pointsCount) {
