@@ -3,3 +3,9 @@ client.spoonacular:
   read-timeout: PT1S
   base-url: "https://api.spoonacular.com"
   api-key: "<API_KEY>"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "spoonacular"
