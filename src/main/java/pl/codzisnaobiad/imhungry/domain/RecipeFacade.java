@@ -1,5 +1,6 @@
 package pl.codzisnaobiad.imhungry.domain;
 
+import pl.codzisnaobiad.imhungry.api.endpoint.RecipeInstructionsResponse;
 import pl.codzisnaobiad.imhungry.api.request.RecipeRequestModel;
 import pl.codzisnaobiad.imhungry.api.response.RecipeIngredientsResponse;
 import pl.codzisnaobiad.imhungry.api.response.SearchRecipesResponse;
@@ -18,5 +19,9 @@ public class RecipeFacade {
 
     public RecipeIngredientsResponse getRecipeIngredients(String recipeId) {
         return recipeProvider.getRecipeIngredients(recipeId);
+    }
+
+    public RecipeInstructionsResponse getRecipeInstructions(String recipeId) {
+        return recipeProvider.getRecipeInstructions(recipeId);
     }
 }

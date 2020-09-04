@@ -36,4 +36,9 @@ class RecipeEndpoint {
         return recipeFacade.getRecipeIngredients(recipeId);
     }
 
+    @GetMapping("/{id}/instructions")
+    RecipeInstructionsResponse getRecipeInstructions(@PathVariable("id") String recipeId) {
+        return recipeFacade.getRecipeInstructions(recipeId);
+    }
+
 }

@@ -21,6 +21,7 @@ class SpoonacularClient {
     private static final String RECIPES_SEGMENT = "recipes";
     private static final String INFORMATION_SEGMENT = "information";
     private static final String COMPLEX_SEARCH_SEGMENT = "complexSearch";
+    private static final String ANALYZED_INSTRUCTIONS_SEGMENT = "analyzedInstructions";
     private static final String INCLUDE_NUTRITION_PARAM = "includeNutrition";
     private static final String API_KEY_PARAM = "apiKey";
     private static final String INCLUDE_INGREDIENTS_PARAM = "includeIngredients";
@@ -30,6 +31,7 @@ class SpoonacularClient {
     private static final String DIET_PARAM = "diet";
     private static final String TYPE_PARAM = "type";
     private static final String NUMBER_PARAM = "number";
+    private static final String STEP_BREAKDOWN_PARAM = "stepBreakdown";
     private static final String INSTRUCTIONS_REQUIRED_PARAM = "instructionsRequired";
     private static final String POINTS_USED_HEADER = "X-API_QUOTA-USED";
 
@@ -38,6 +40,7 @@ class SpoonacularClient {
     private static final boolean ADD_RECIPE_NUTRITION = true;
     private static final String EMPTY_STRING = "";
     private static final boolean INCLUDE_NUTRITION = true;
+    private static final boolean STEP_BREAKDOWN = true;
 
     private final RestTemplate http;
     private final ObjectMapper objectMapper;
@@ -86,6 +89,18 @@ class SpoonacularClient {
 
         var response = executeGetRequest(uri);
         return mapJsonToObject(response.getBody(), SpoonacularGetRecipeInformationResponse.class);
+    }
+
+    SpoonacularGetAnalyzedInstructionsResponse[] getRecipeInstructions(String recipeId) {
+        var uri = fromHttpUrl(baseUrl)
+            .pathSegment(RECIPES_SEGMENT, recipeId, ANALYZED_INSTRUCTIONS_SEGMENT)
+            .queryParam(STEP_BREAKDOWN_PARAM, STEP_BREAKDOWN)
+            .queryParam(API_KEY_PARAM, apiKey)
+            .build()
+            .toUri();
+
+        var response = executeGetRequest(uri);
+        return mapJsonToObject(response.getBody(), SpoonacularGetAnalyzedInstructionsResponse[].class);
     }
 
     private HttpEntity<String> executeGetRequest(URI uri) {

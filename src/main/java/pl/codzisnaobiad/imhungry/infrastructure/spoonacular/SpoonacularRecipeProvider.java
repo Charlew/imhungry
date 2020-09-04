@@ -1,5 +1,6 @@
 package pl.codzisnaobiad.imhungry.infrastructure.spoonacular;
 
+import pl.codzisnaobiad.imhungry.api.endpoint.RecipeInstructionsResponse;
 import pl.codzisnaobiad.imhungry.api.request.RecipeRequestModel;
 import pl.codzisnaobiad.imhungry.api.response.Ingredient;
 import pl.codzisnaobiad.imhungry.api.response.SearchRecipeResponse;
@@ -50,6 +51,11 @@ class SpoonacularRecipeProvider implements RecipeProvider {
         }
         var recipeInformation = spoonacularClient.getRecipeInformationById(id);
         return prepareRecipeInformationResponse(recipeInformation);
+    }
+
+    @Override
+    public RecipeInstructionsResponse getRecipeInstructions(String recipeId) {
+        var recipeInstructions = spoonacularClient.getRecipeInstructions(recipeId);
     }
 
     private RecipeIngredientsResponse prepareRecipeInformationResponse(SpoonacularGetRecipeInformationResponse recipeInformation) {
