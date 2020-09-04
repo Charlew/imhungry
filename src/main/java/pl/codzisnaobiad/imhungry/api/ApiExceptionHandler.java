@@ -16,9 +16,9 @@ class ApiExceptionHandler {
 
     @ExceptionHandler(SpoonacularCommunicationException.class)
     ResponseEntity<String> onSpoonacularCommunicationException(SpoonacularCommunicationException exception) {
-        logger.warn(exception.getMessage(), exception);
+        logger.error(exception.getMessage(), exception);
         return ResponseEntity
-            .status(HttpStatus.UNPROCESSABLE_ENTITY)
+            .status(HttpStatus.INTERNAL_SERVER_ERROR)
             .body(exception.getMessage());
     }
 
