@@ -10,15 +10,18 @@ class SpoonacularRecipeProviderSpec extends Specification {
     @Subject
     private SpoonacularRecipeProvider spoonacularRecipeProvider
     private SpoonacularClient spoonacularClient = Mock()
-    private QuotaPointsCounter quotaPointsCounter = new QuotaPointsCounter()
     private NutrientsPicker nutrientsPicker = new NutrientsPicker()
     private UrlGenerator urlGenerator = new UrlGenerator()
 
     @Unroll
     def 'should return fake recipes when used quota points is equal #quotaPoints and limit is #quotaPointsLimit'() {
         given:
-            spoonacularRecipeProvider = new SpoonacularRecipeProvider(new FakeRecipeProvider(), spoonacularClient, quotaPointsCounter, nutrientsPicker, urlGenerator, quotaPointsLimit)
+            def quotaPointsCounter = new QuotaPointsCounter(quotaPointsLimit)
+
+        and:
+            spoonacularRecipeProvider = new SpoonacularRecipeProvider(new FakeRecipeProvider(), spoonacularClient, quotaPointsCounter, nutrientsPicker, urlGenerator,)
             quotaPointsCounter.setQuotaPoints(quotaPoints)
+
         and:
             def recipeRequestModel = RecipeRequestModel.builder().withIncludedIngredients(List.of("bananas", "chocolate")).build()
 
@@ -39,8 +42,12 @@ class SpoonacularRecipeProviderSpec extends Specification {
     @Unroll
     def 'should return fake recipe ingredients when used quota points is equal #quotaPoints and limit is #quotaPointsLimit'() {
         given:
-            spoonacularRecipeProvider = new SpoonacularRecipeProvider(new FakeRecipeProvider(), spoonacularClient, quotaPointsCounter, nutrientsPicker, urlGenerator, quotaPointsLimit)
+            def quotaPointsCounter = new QuotaPointsCounter(quotaPointsLimit)
+
+        and:
+            spoonacularRecipeProvider = new SpoonacularRecipeProvider(new FakeRecipeProvider(), spoonacularClient, quotaPointsCounter, nutrientsPicker, urlGenerator,)
             quotaPointsCounter.setQuotaPoints(quotaPoints)
+
         and:
             def recipeId = "123"
 

@@ -17,26 +17,23 @@ class SpoonacularRecipeProvider implements RecipeProvider {
     private final QuotaPointsCounter quotaPointsCounter;
     private final NutrientsPicker nutrientsPicker;
     private final UrlGenerator urlGenerator;
-    private final int quotaPointsLimit;
 
     SpoonacularRecipeProvider(RecipeProvider fakeRecipeProvider,
                               SpoonacularClient spoonacularClient,
                               QuotaPointsCounter quotaPointsCounter,
                               NutrientsPicker nutrientsPicker,
-                              UrlGenerator urlGenerator,
-                              int quotaPointsLimit
+                              UrlGenerator urlGenerator
     ) {
         this.fakeRecipeProvider = fakeRecipeProvider;
         this.spoonacularClient = spoonacularClient;
         this.quotaPointsCounter = quotaPointsCounter;
         this.nutrientsPicker = nutrientsPicker;
         this.urlGenerator = urlGenerator;
-        this.quotaPointsLimit = quotaPointsLimit;
     }
 
     @Override
     public SearchRecipesResponse searchRecipes(RecipeRequestModel recipeRequestModel) {
-        if (quotaPointsCounter.getPointsCount() >= quotaPointsLimit) {
+        if (quotaPointsCounter.quotaPointsExceeded()) {
             return fakeRecipeProvider.searchRecipes(recipeRequestModel);
         }
         var recipes = spoonacularClient.searchRecipes(recipeRequestModel).getResults()
@@ -48,7 +45,7 @@ class SpoonacularRecipeProvider implements RecipeProvider {
 
     @Override
     public RecipeIngredientsResponse getRecipeIngredients(String id) {
-        if (quotaPointsCounter.getPointsCount() >= quotaPointsLimit) {
+        if (quotaPointsCounter.quotaPointsExceeded()) {
             return fakeRecipeProvider.getRecipeIngredients(id);
         }
         var recipeInformation = spoonacularClient.getRecipeInformationById(id);

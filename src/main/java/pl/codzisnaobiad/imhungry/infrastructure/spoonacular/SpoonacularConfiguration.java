@@ -1,7 +1,8 @@
 package pl.codzisnaobiad.imhungry.infrastructure.spoonacular;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.*;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,9 +19,9 @@ class SpoonacularConfiguration {
                                              SpoonacularClient spoonacularClient,
                                              QuotaPointsCounter quotaPointsCounter,
                                              NutrientsPicker nutrientsPicker,
-                                             UrlGenerator urlGenerator,
-                                             @Value("${client.spoonacular.quota-points-limit:149}") int quotaPointsLimit) {
-        return new SpoonacularRecipeProvider(fakeRecipeProvider, spoonacularClient, quotaPointsCounter, nutrientsPicker, urlGenerator, quotaPointsLimit);
+                                             UrlGenerator urlGenerator
+    ) {
+        return new SpoonacularRecipeProvider(fakeRecipeProvider, spoonacularClient, quotaPointsCounter, nutrientsPicker, urlGenerator);
     }
 
     @Bean
