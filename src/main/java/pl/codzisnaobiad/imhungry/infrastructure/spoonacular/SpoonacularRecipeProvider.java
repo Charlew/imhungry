@@ -14,7 +14,6 @@ import pl.codzisnaobiad.imhungry.api.response.Temperature;
 import pl.codzisnaobiad.imhungry.domain.RecipeProvider;
 
 import java.util.List;
-import java.util.Optional;
 
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.toList;
