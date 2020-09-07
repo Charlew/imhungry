@@ -14,7 +14,7 @@ class NutrientsPicker {
 
     private final static List<String> SUPPORTED_INGREDIENTS = allOf(SupportedNutrient.class).stream().map(Enum::name).collect(toList());
 
-    List<Nutrient> pickSupportedNutrients(List<SpoonacularGetRecipeInformationResponse.Nutrition.Nutrient> spoonacularNutrients) {
+    List<Nutrient> pickSupportedNutrients(List<SpoonacularRecipeInformationResponse.Nutrition.Nutrient> spoonacularNutrients) {
         return spoonacularNutrients.stream()
             .filter(spoonacularNutrient -> isNutrientSupported(spoonacularNutrient.getTitle()))
             .map(this::mapToApiNutrient)
@@ -26,10 +26,11 @@ class NutrientsPicker {
         return SUPPORTED_INGREDIENTS.contains(nutrientTitleUpperCase);
     }
 
-    private Nutrient mapToApiNutrient(SpoonacularGetRecipeInformationResponse.Nutrition.Nutrient nutrient) {
+    private Nutrient mapToApiNutrient(SpoonacularRecipeInformationResponse.Nutrition.Nutrient nutrient) {
         return Nutrient.newBuilder()
             .withName(nutrient.getTitle())
             .withAmount(nutrient.getAmount())
+            .withUnit(nutrient.getUnit())
             .build();
     }
 

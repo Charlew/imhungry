@@ -45,7 +45,6 @@ public class FakeRecipeProvider implements RecipeProvider {
             new RecipeInstructionResponse("Grill bacon", List.of(Step.newBuilder()
                 .withNumber(1)
                 .withStep("Put them on the rack")
-                .withIngredients(fakeIngredientsWithOnlyNameAndImage())
                 .withEquipment(fakeEquipment())
                 .withLength(new Length(20, "minutes"))
                 .build()))
@@ -55,15 +54,6 @@ public class FakeRecipeProvider implements RecipeProvider {
     private List<Equipment> fakeEquipment() {
         return List.of(
             new Equipment("grill", "grill.jpg", new Temperature(200f, "Celsius"))
-        );
-    }
-
-    private List<Ingredient> fakeIngredientsWithOnlyNameAndImage() {
-        return List.of(
-            Ingredient.newBuilder()
-                .withName("bacon")
-                .withImage("bacon.jpg")
-                .build()
         );
     }
 

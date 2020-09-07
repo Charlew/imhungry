@@ -18,10 +18,9 @@ class SpoonacularConfiguration {
     RecipeProvider spoonacularRecipeProvider(@Qualifier("fakeRecipeProvider") RecipeProvider fakeRecipeProvider,
                                              SpoonacularClient spoonacularClient,
                                              QuotaPointsCounter quotaPointsCounter,
-                                             NutrientsPicker nutrientsPicker,
-                                             UrlGenerator urlGenerator
+                                             SpoonacularMapper spoonacularMapper
     ) {
-        return new SpoonacularRecipeProvider(fakeRecipeProvider, spoonacularClient, quotaPointsCounter, nutrientsPicker, urlGenerator);
+        return new SpoonacularRecipeProvider(fakeRecipeProvider, spoonacularClient, quotaPointsCounter, spoonacularMapper);
     }
 
     @Bean

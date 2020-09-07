@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import java.util.List;
+import java.util.Objects;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
@@ -13,14 +14,12 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 public final class Step {
     private final int number;
     private final String step;
-    private final List<Ingredient> ingredients;
     private final List<Equipment> equipment;
     private final Length length;
 
     public Step(Builder builder) {
         this.number = builder.number;
         this.step = builder.step;
-        this.ingredients = builder.ingredients;
         this.equipment = builder.equipment;
         this.length = builder.length;
     }
@@ -31,10 +30,6 @@ public final class Step {
 
     public String getStep() {
         return step;
-    }
-
-    public List<Ingredient> getIngredients() {
-        return ingredients;
     }
 
     public List<Equipment> getEquipment() {
@@ -49,11 +44,36 @@ public final class Step {
         return new Builder();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Step step1 = (Step) o;
+        return number == step1.number &&
+            Objects.equals(step, step1.step) &&
+            Objects.equals(equipment, step1.equipment) &&
+            Objects.equals(length, step1.length);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(number, step, equipment, length);
+    }
+
+    @Override
+    public String toString() {
+        return "Step{" +
+            "number=" + number +
+            ", step='" + step + '\'' +
+            ", equipment=" + equipment +
+            ", length=" + length +
+            '}';
+    }
+
     @JsonPOJOBuilder
     public static final class Builder {
         private int number;
         private String step;
-        private List<Ingredient> ingredients;
         private List<Equipment> equipment;
         private Length length;
 
@@ -67,11 +87,6 @@ public final class Step {
 
         public Builder withStep(String step) {
             this.step = step;
-            return this;
-        }
-
-        public Builder withIngredients(List<Ingredient> ingredients) {
-            this.ingredients = ingredients;
             return this;
         }
 

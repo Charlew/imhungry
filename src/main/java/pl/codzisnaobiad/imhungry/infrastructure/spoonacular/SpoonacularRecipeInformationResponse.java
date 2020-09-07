@@ -10,29 +10,23 @@ import static java.util.Collections.emptyList;
 import static java.util.Optional.ofNullable;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-final class SpoonacularGetRecipeInformationResponse {
+final class SpoonacularRecipeInformationResponse {
     private final List<ExtendedIngredient> extendedIngredients;
     private final String title;
     private final int readyInMinutes;
     private final int servings;
-    private final String sourceUrl;
-    private final String imageUrl;
     private final Nutrition nutrition;
 
     @JsonCreator
-    SpoonacularGetRecipeInformationResponse(@JsonProperty("extendedIngredients") List<ExtendedIngredient> extendedIngredients,
-                                            @JsonProperty("title") String title,
-                                            @JsonProperty("readyInMinutes") int readyInMinutes,
-                                            @JsonProperty("servings") int servings,
-                                            @JsonProperty("sourceUrl") String sourceUrl,
-                                            @JsonProperty("image") String imageUrl,
-                                            @JsonProperty("nutrition") Nutrition nutrition) {
+    SpoonacularRecipeInformationResponse(@JsonProperty("extendedIngredients") List<ExtendedIngredient> extendedIngredients,
+                                         @JsonProperty("title") String title,
+                                         @JsonProperty("readyInMinutes") int readyInMinutes,
+                                         @JsonProperty("servings") int servings,
+                                         @JsonProperty("nutrition") Nutrition nutrition) {
         this.extendedIngredients = extendedIngredients;
         this.title = title;
         this.readyInMinutes = readyInMinutes;
         this.servings = servings;
-        this.sourceUrl = sourceUrl;
-        this.imageUrl = imageUrl;
         this.nutrition = nutrition;
     }
 
@@ -50,14 +44,6 @@ final class SpoonacularGetRecipeInformationResponse {
 
     public int getServings() {
         return servings;
-    }
-
-    public String getSourceUrl() {
-        return sourceUrl;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
     }
 
     public Nutrition getNutrition() {
@@ -124,17 +110,14 @@ final class SpoonacularGetRecipeInformationResponse {
              private final String title;
              private final float amount;
              private final String unit;
-             private final float percentOfDailyNeeds;
 
              @JsonCreator
              Nutrient(@JsonProperty("title") String title,
                       @JsonProperty("amount") float amount,
-                      @JsonProperty("unit") String unit,
-                      @JsonProperty("percentOfDailyNeeds") float percentOfDailyNeeds) {
+                      @JsonProperty("unit") String unit) {
                  this.title = title;
                  this.amount = amount;
                  this.unit = unit;
-                 this.percentOfDailyNeeds = percentOfDailyNeeds;
              }
 
              public String getTitle() {
@@ -147,10 +130,6 @@ final class SpoonacularGetRecipeInformationResponse {
 
              public String getUnit() {
                  return unit;
-             }
-
-             public float getPercentOfDailyNeeds() {
-                 return percentOfDailyNeeds;
              }
          }
      }
