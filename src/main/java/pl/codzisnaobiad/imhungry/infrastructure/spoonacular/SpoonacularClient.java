@@ -79,7 +79,7 @@ class SpoonacularClient {
         return mapJsonToObject(response.getBody(), SpoonacularSearchRecipesResponse.class);
     }
 
-    SpoonacularGetRecipeInformationResponse getRecipeInformationById(String recipeId) {
+    SpoonacularRecipeInformationResponse getRecipeInformationById(String recipeId) {
         var uri = fromHttpUrl(baseUrl)
             .pathSegment(RECIPES_SEGMENT, recipeId, INFORMATION_SEGMENT)
             .queryParam(INCLUDE_NUTRITION_PARAM, INCLUDE_NUTRITION)
@@ -88,10 +88,10 @@ class SpoonacularClient {
             .toUri();
 
         var response = executeGetRequest(uri);
-        return mapJsonToObject(response.getBody(), SpoonacularGetRecipeInformationResponse.class);
+        return mapJsonToObject(response.getBody(), SpoonacularRecipeInformationResponse.class);
     }
 
-    SpoonacularGetAnalyzedInstructionsResponse[] getRecipeInstructions(String recipeId) {
+    SpoonacularAnalyzedInstructionsResponse[] getRecipeInstructions(String recipeId) {
         var uri = fromHttpUrl(baseUrl)
             .pathSegment(RECIPES_SEGMENT, recipeId, ANALYZED_INSTRUCTIONS_SEGMENT)
             .queryParam(STEP_BREAKDOWN_PARAM, STEP_BREAKDOWN)
@@ -100,7 +100,7 @@ class SpoonacularClient {
             .toUri();
 
         var response = executeGetRequest(uri);
-        return mapJsonToObject(response.getBody(), SpoonacularGetAnalyzedInstructionsResponse[].class);
+        return mapJsonToObject(response.getBody(), SpoonacularAnalyzedInstructionsResponse[].class);
     }
 
     private HttpEntity<String> executeGetRequest(URI uri) {

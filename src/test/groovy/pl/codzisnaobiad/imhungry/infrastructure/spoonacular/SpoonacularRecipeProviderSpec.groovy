@@ -10,8 +10,7 @@ class SpoonacularRecipeProviderSpec extends Specification {
     @Subject
     private SpoonacularRecipeProvider spoonacularRecipeProvider
     private SpoonacularClient spoonacularClient = Mock()
-    private NutrientsPicker nutrientsPicker = new NutrientsPicker()
-    private UrlGenerator urlGenerator = new UrlGenerator()
+    private SpoonacularMapper spoonacularMapper = Mock()
 
     @Unroll
     def 'should return fake recipes when used quota points is equal #quotaPoints and limit is #quotaPointsLimit'() {
@@ -19,7 +18,7 @@ class SpoonacularRecipeProviderSpec extends Specification {
             def quotaPointsCounter = new QuotaPointsCounter(quotaPointsLimit)
 
         and:
-            spoonacularRecipeProvider = new SpoonacularRecipeProvider(new FakeRecipeProvider(), spoonacularClient, quotaPointsCounter, nutrientsPicker, urlGenerator,)
+            spoonacularRecipeProvider = new SpoonacularRecipeProvider(new FakeRecipeProvider(), spoonacularClient, quotaPointsCounter, spoonacularMapper)
             quotaPointsCounter.setQuotaPoints(quotaPoints)
 
         and:
@@ -45,7 +44,7 @@ class SpoonacularRecipeProviderSpec extends Specification {
             def quotaPointsCounter = new QuotaPointsCounter(quotaPointsLimit)
 
         and:
-            spoonacularRecipeProvider = new SpoonacularRecipeProvider(new FakeRecipeProvider(), spoonacularClient, quotaPointsCounter, nutrientsPicker, urlGenerator,)
+            spoonacularRecipeProvider = new SpoonacularRecipeProvider(new FakeRecipeProvider(), spoonacularClient, quotaPointsCounter, spoonacularMapper)
             quotaPointsCounter.setQuotaPoints(quotaPoints)
 
         and:

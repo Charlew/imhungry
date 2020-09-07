@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
+import java.util.Objects;
+
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
 @JsonInclude(NON_NULL)
@@ -45,6 +47,34 @@ public final class Ingredient {
 
     public static Builder newBuilder() {
         return new Builder();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Ingredient that = (Ingredient) o;
+        return Float.compare(that.amount, amount) == 0 &&
+            Objects.equals(id, that.id) &&
+            Objects.equals(name, that.name) &&
+            Objects.equals(unit, that.unit) &&
+            Objects.equals(image, that.image);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, amount, unit, image);
+    }
+
+    @Override
+    public String toString() {
+        return "Ingredient{" +
+            "id='" + id + '\'' +
+            ", name='" + name + '\'' +
+            ", amount=" + amount +
+            ", unit='" + unit + '\'' +
+            ", image='" + image + '\'' +
+            '}';
     }
 
     @JsonPOJOBuilder

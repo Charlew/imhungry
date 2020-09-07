@@ -4,7 +4,6 @@ import org.springframework.http.HttpStatus
 import org.springframework.util.LinkedMultiValueMap
 import pl.codzisnaobiad.imhungry.IntegrationSpec
 import pl.codzisnaobiad.imhungry.api.response.RecipeIngredientsResponse
-import pl.codzisnaobiad.imhungry.api.response.RecipeInstructionResponse
 import pl.codzisnaobiad.imhungry.api.response.RecipeInstructionsResponse
 import pl.codzisnaobiad.imhungry.api.response.SearchRecipesResponse
 

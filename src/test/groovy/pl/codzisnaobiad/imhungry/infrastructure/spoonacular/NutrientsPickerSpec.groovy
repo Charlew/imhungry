@@ -34,8 +34,8 @@ class NutrientsPickerSpec extends Specification {
             result.size() <= EnumSet.allOf(SupportedNutrient.class).size()
     }
 
-    private static SpoonacularGetRecipeInformationResponse.Nutrition.Nutrient spoonacularNutrient(String title, String unit = "g") {
-        new SpoonacularGetRecipeInformationResponse.Nutrition.Nutrient(title, 100f, unit, 10f)
+    private static SpoonacularRecipeInformationResponse.Nutrition.Nutrient spoonacularNutrient(String title, String unit = "g") {
+        new SpoonacularRecipeInformationResponse.Nutrition.Nutrient(title, 100f, unit)
     }
 
 }
