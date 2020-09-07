@@ -1,22 +1,26 @@
 package pl.codzisnaobiad.imhungry.api.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
+
+@JsonInclude(NON_NULL)
 @JsonDeserialize(builder = Ingredient.Builder.class)
 public final class Ingredient {
     private final String id;
     private final String name;
     private final float amount;
     private final String unit;
-    private final String imageUrl;
+    private final String image;
 
     private Ingredient(Builder builder) {
         this.id = builder.id;
         this.name = builder.name;
         this.amount = builder.amount;
         this.unit = builder.unit;
-        this.imageUrl = builder.imageUrl;
+        this.image = builder.image;
     }
 
     public String getId() {
@@ -35,8 +39,8 @@ public final class Ingredient {
         return unit;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImage() {
+        return image;
     }
 
     public static Builder newBuilder() {
@@ -49,7 +53,7 @@ public final class Ingredient {
         private String name;
         private float amount;
         private String unit;
-        private String imageUrl;
+        private String image;
 
         private Builder() {
         }
@@ -74,8 +78,8 @@ public final class Ingredient {
             return this;
         }
 
-        public Builder withImageUrl(String imageUrl) {
-            this.imageUrl = imageUrl;
+        public Builder withImage(String imageUrl) {
+            this.image = imageUrl;
             return this;
         }
 

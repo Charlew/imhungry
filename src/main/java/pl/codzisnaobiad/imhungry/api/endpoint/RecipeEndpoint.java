@@ -7,9 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.codzisnaobiad.imhungry.api.request.RecipeRequestModelMapper;
+import pl.codzisnaobiad.imhungry.api.response.RecipeIngredientsResponse;
+import pl.codzisnaobiad.imhungry.api.response.RecipeInstructionsResponse;
 import pl.codzisnaobiad.imhungry.api.response.SearchRecipesResponse;
 import pl.codzisnaobiad.imhungry.domain.RecipeFacade;
-import pl.codzisnaobiad.imhungry.api.response.RecipeIngredientsResponse;
 
 @RestController
 @RequestMapping("/recipes")
@@ -40,5 +41,4 @@ class RecipeEndpoint {
     RecipeInstructionsResponse getRecipeInstructions(@PathVariable("id") String recipeId) {
         return recipeFacade.getRecipeInstructions(recipeId);
     }
-
 }

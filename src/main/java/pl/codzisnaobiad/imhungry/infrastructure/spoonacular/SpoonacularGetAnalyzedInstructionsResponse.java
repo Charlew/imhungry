@@ -27,7 +27,7 @@ public final class SpoonacularGetAnalyzedInstructionsResponse {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    private static final class Step {
+    static final class Step {
         private final int number;
         private final String step;
         private final List<Ingredient> ingredients;
@@ -35,9 +35,7 @@ public final class SpoonacularGetAnalyzedInstructionsResponse {
         private final Length length;
 
         @JsonCreator
-        private Step(@JsonProperty("name") String name,
-                     @JsonProperty("steps") List<Step> steps,
-                     @JsonProperty("number") int number,
+        private Step(@JsonProperty("number") int number,
                      @JsonProperty("step") String step,
                      @JsonProperty("ingredients") List<Ingredient> ingredients,
                      @JsonProperty("equipment") List<Equipment> equipment,
@@ -70,7 +68,7 @@ public final class SpoonacularGetAnalyzedInstructionsResponse {
         }
 
         @JsonIgnoreProperties(ignoreUnknown = true)
-        private static final class Ingredient {
+        static final class Ingredient {
             private final String name;
             private final String image;
 
@@ -91,7 +89,7 @@ public final class SpoonacularGetAnalyzedInstructionsResponse {
         }
 
         @JsonIgnoreProperties(ignoreUnknown = true)
-        private static final class Equipment {
+        static final class Equipment {
             private final String name;
             private final String image;
             private final Temperature temperature;
@@ -118,7 +116,7 @@ public final class SpoonacularGetAnalyzedInstructionsResponse {
             }
 
             @JsonIgnoreProperties(ignoreUnknown = true)
-            private static final class Temperature {
+            static final class Temperature {
                 private final String unit;
                 private final float number;
 
@@ -140,7 +138,7 @@ public final class SpoonacularGetAnalyzedInstructionsResponse {
         }
 
         @JsonIgnoreProperties(ignoreUnknown = true)
-        private static final class Length {
+        static final class Length {
             private final int number;
             private final String unit;
 

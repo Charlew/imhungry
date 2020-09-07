@@ -4,6 +4,8 @@ import org.springframework.http.HttpStatus
 import org.springframework.util.LinkedMultiValueMap
 import pl.codzisnaobiad.imhungry.IntegrationSpec
 import pl.codzisnaobiad.imhungry.api.response.RecipeIngredientsResponse
+import pl.codzisnaobiad.imhungry.api.response.RecipeInstructionResponse
+import pl.codzisnaobiad.imhungry.api.response.RecipeInstructionsResponse
 import pl.codzisnaobiad.imhungry.api.response.SearchRecipesResponse
 
 class RecipeEndpointSpec extends IntegrationSpec {
@@ -44,7 +46,25 @@ class RecipeEndpointSpec extends IntegrationSpec {
                 readyInMinutes == 45
                 servings == 2
             }
+    }
 
+    def "should get recipe instructions by recipe id"() {
+        given:
+            def id = "324624"
+        and:
+            stubSpoonacularGetRecipeInstructionsById(id, "SpoonacularGetAnalyzedRecipeInstructions.json")
+        when:
+            def response = httpClient.getForEntity("/recipes/$id/instructions", RecipeInstructionsResponse.class)
+        then:
+            response.statusCode.'2xxSuccessful'
+            response.body.instructions[0].with {
+                name == "Prepare ingredients for grilling"
+                steps.size() != 0
+            }
+            response.body.instructions[1].with {
+                name == "Get grilling"
+                steps.size() != 0
+            }
     }
 
 }
