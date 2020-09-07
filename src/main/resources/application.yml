@@ -9,3 +9,6 @@ management:
     web:
       exposure:
         include: "spoonacular"
+
+cors:
+  allowed-origins: http://localhost:3000,https://i-am-hungry.netlify.app
