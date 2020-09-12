@@ -12,3 +12,7 @@ management:
 
 cors:
   allowed-origins: http://localhost:3000,https://i-am-hungry.netlify.app
+
+spring:
+  liquibase:
+    change-log: classpath:/db/changelog.xml
