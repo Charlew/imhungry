@@ -23,7 +23,7 @@ public class IngredientFacade {
             .orElse(emptyList());
     }
 
-    public Ingredient findByNameAndReplace(String name) {
+    public Ingredient saveIngredient(String name) {
         return ingredientRepository.findByName(name)
             .map(ingredient -> ingredientRepository.save(new Ingredient(
                 ingredient.getId(),

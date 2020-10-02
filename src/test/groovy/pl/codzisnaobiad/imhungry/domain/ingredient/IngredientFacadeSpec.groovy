@@ -36,7 +36,7 @@ class IngredientFacadeSpec extends Specification {
             def ingredient = new Ingredient("uuid1", name, 5)
             ingredientRepository.save(ingredient)
         when:
-            def result = ingredientFacade.findByNameAndReplace(name)
+            def result = ingredientFacade.saveIngredient(name)
         then:
             result.id == "uuid1"
             result.name == "tomato"
@@ -47,7 +47,7 @@ class IngredientFacadeSpec extends Specification {
         given:
             def name = "tomato"
         when:
-            def result = ingredientFacade.findByNameAndReplace(name)
+            def result = ingredientFacade.saveIngredient(name)
         then:
             result.name == "tomato"
             result.count == 1

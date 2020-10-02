@@ -37,6 +37,6 @@ public class RecipeFacade {
     }
 
     private void saveIngredients(List<String> includedIngredients) {
-        includedIngredients.forEach(ingredientFacade::findByNameAndReplace);
+        includedIngredients.forEach(ingredientFacade::saveIngredient);
     }
 }
