@@ -1,6 +1,6 @@
 package pl.codzisnaobiad.imhungry.infrastructure.spoonacular
 
-import pl.codzisnaobiad.imhungry.api.request.RecipeRequestModel
+import pl.codzisnaobiad.imhungry.api.request.recipe.RecipeRequestModel
 import spock.lang.Specification
 import spock.lang.Subject
 import spock.lang.Unroll

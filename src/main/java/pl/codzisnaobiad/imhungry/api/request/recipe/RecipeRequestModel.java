@@ -1,4 +1,4 @@
-package pl.codzisnaobiad.imhungry.api.request;
+package pl.codzisnaobiad.imhungry.api.request.recipe;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

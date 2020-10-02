@@ -8,7 +8,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import pl.codzisnaobiad.imhungry.api.exception.SpoonacularCommunicationException;
-import pl.codzisnaobiad.imhungry.api.request.RecipeRequestModel;
+import pl.codzisnaobiad.imhungry.api.request.recipe.RecipeRequestModel;
 
 import java.net.URI;
 

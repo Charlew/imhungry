@@ -1,19 +1,19 @@
 package pl.codzisnaobiad.imhungry.infrastructure.spoonacular;
 
 import org.springframework.stereotype.Component;
-import pl.codzisnaobiad.imhungry.api.request.RecipeRequestModel;
-import pl.codzisnaobiad.imhungry.api.response.Equipment;
-import pl.codzisnaobiad.imhungry.api.response.Ingredient;
-import pl.codzisnaobiad.imhungry.api.response.Length;
-import pl.codzisnaobiad.imhungry.api.response.Nutrient;
-import pl.codzisnaobiad.imhungry.api.response.RecipeIngredientsResponse;
-import pl.codzisnaobiad.imhungry.api.response.RecipeInstructionResponse;
-import pl.codzisnaobiad.imhungry.api.response.RecipeInstructionsResponse;
-import pl.codzisnaobiad.imhungry.api.response.SearchRecipeResponse;
-import pl.codzisnaobiad.imhungry.api.response.SearchRecipesResponse;
-import pl.codzisnaobiad.imhungry.api.response.Step;
-import pl.codzisnaobiad.imhungry.api.response.Temperature;
-import pl.codzisnaobiad.imhungry.domain.RecipeProvider;
+import pl.codzisnaobiad.imhungry.api.request.recipe.RecipeRequestModel;
+import pl.codzisnaobiad.imhungry.api.response.recipe.Equipment;
+import pl.codzisnaobiad.imhungry.api.response.recipe.Ingredient;
+import pl.codzisnaobiad.imhungry.api.response.recipe.Length;
+import pl.codzisnaobiad.imhungry.api.response.recipe.Nutrient;
+import pl.codzisnaobiad.imhungry.api.response.recipe.RecipeIngredientsResponse;
+import pl.codzisnaobiad.imhungry.api.response.recipe.RecipeInstructionResponse;
+import pl.codzisnaobiad.imhungry.api.response.recipe.RecipeInstructionsResponse;
+import pl.codzisnaobiad.imhungry.api.response.recipe.SearchRecipeResponse;
+import pl.codzisnaobiad.imhungry.api.response.recipe.SearchRecipesResponse;
+import pl.codzisnaobiad.imhungry.api.response.recipe.Step;
+import pl.codzisnaobiad.imhungry.api.response.recipe.Temperature;
+import pl.codzisnaobiad.imhungry.domain.recipe.RecipeProvider;
 
 import java.util.List;
 

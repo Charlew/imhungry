@@ -1,4 +1,4 @@
-package pl.codzisnaobiad.imhungry.api.response;
+package pl.codzisnaobiad.imhungry.api.response.recipe;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
