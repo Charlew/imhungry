@@ -17,7 +17,7 @@ class IngredientEndpoint {
         this.ingredientFacade = ingredientFacade;
     }
 
-    @GetMapping("/popularIngredients")
+    @GetMapping("/popular")
     List<String> getPopularIngredients() {
         return ingredientFacade.getPopularIngredients();
     }
