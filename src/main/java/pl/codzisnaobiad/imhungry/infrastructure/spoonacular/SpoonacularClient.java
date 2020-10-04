@@ -37,7 +37,6 @@ class SpoonacularClient {
 
     private static final int MAX_RECIPES = 5;
     private static final boolean INSTRUCTIONS_REQUIRED = true;
-    private static final boolean ADD_RECIPE_NUTRITION = true;
     private static final String EMPTY_STRING = "";
     private static final boolean INCLUDE_NUTRITION = true;
     private static final boolean STEP_BREAKDOWN = true;
@@ -67,10 +66,8 @@ class SpoonacularClient {
                 .queryParam(QUERY_PARAM, ofNullable(recipeRequestModel.getNameQuery()).orElse(EMPTY_STRING))
                 .queryParam(DIET_PARAM, ofNullable(recipeRequestModel.getDiet()).orElse(EMPTY_STRING))
                 .queryParam(TYPE_PARAM, ofNullable(recipeRequestModel.getMealType()).orElse(EMPTY_STRING))
-//                .queryParam("sort", ofNullable(recipeRequestModel.getSortBy()).orElse(EMPTY_STRING)) <- dziwnie działa, do zbadania
                 .queryParam(NUMBER_PARAM, MAX_RECIPES)
                 .queryParam(INSTRUCTIONS_REQUIRED_PARAM, INSTRUCTIONS_REQUIRED)
-//                .queryParam("addRecipeNutrition", ADD_RECIPE_NUTRITION) <- bardzo dziwnie to działa, jak się doda to zwraca opis, wartości i kroki
                 .encode()
                 .build()
                 .toUri();

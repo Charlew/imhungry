@@ -9,7 +9,7 @@ import pl.codzisnaobiad.imhungry.api.response.SearchRecipesResponse
 
 class RecipeEndpointSpec extends IntegrationSpec {
 
-    def "should get random recipe"() {
+    def "should get recipes"() {
         given:
             def queryParameters = new LinkedMultiValueMap()
             queryParameters.addAll("includedIngredient", ["banana", "chocolate"])

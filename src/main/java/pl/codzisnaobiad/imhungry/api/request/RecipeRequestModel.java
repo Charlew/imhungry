@@ -6,6 +6,9 @@ import org.springframework.util.Assert;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+
+import static java.util.Collections.emptyList;
 
 public class RecipeRequestModel {
 
@@ -15,7 +18,6 @@ public class RecipeRequestModel {
     private final String nameQuery;
     private final String diet;
     private final String mealType;
-    private final String sortBy;
 
     @JsonCreator
     public RecipeRequestModel(
@@ -24,16 +26,14 @@ public class RecipeRequestModel {
             @JsonProperty("intolerances") List<String> intolerances,
             @JsonProperty("nameQuery") String nameQuery,
             @JsonProperty("diet") String diet,
-            @JsonProperty("mealType") String mealType,
-            @JsonProperty("sortBy") String sortBy
+            @JsonProperty("mealType") String mealType
     ) {
-        this.includedIngredients = includedIngredients;
-        this.excludedIngredients = excludedIngredients;
-        this.intolerances = intolerances;
+        this.includedIngredients = Optional.ofNullable(includedIngredients).map(List::copyOf).orElse(emptyList());
+        this.excludedIngredients = Optional.ofNullable(excludedIngredients).map(List::copyOf).orElse(emptyList());
+        this.intolerances = Optional.ofNullable(intolerances).map(List::copyOf).orElse(emptyList());
         this.nameQuery = nameQuery;
         this.diet = diet;
         this.mealType = mealType;
-        this.sortBy = sortBy;
     }
 
     public List<String> getIncludedIngredients() {
@@ -60,10 +60,6 @@ public class RecipeRequestModel {
         return mealType;
     }
 
-    public String getSortBy() {
-        return sortBy;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -74,13 +70,12 @@ public class RecipeRequestModel {
                 Objects.equals(intolerances, that.intolerances) &&
                 Objects.equals(nameQuery, that.nameQuery) &&
                 Objects.equals(diet, that.diet) &&
-                Objects.equals(mealType, that.mealType) &&
-                Objects.equals(sortBy, that.sortBy);
+                Objects.equals(mealType, that.mealType);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(includedIngredients, excludedIngredients, intolerances, nameQuery, diet, mealType, sortBy);
+        return Objects.hash(includedIngredients, excludedIngredients, intolerances, nameQuery, diet, mealType);
     }
 
     @Override
@@ -92,7 +87,6 @@ public class RecipeRequestModel {
                 ", nameQuery='" + nameQuery + '\'' +
                 ", diet='" + diet + '\'' +
                 ", mealType='" + mealType + '\'' +
-                ", sortBy='" + sortBy + '\'' +
                 '}';
     }
 
@@ -108,7 +102,6 @@ public class RecipeRequestModel {
         private String nameQuery;
         private String diet;
         private String mealType;
-        private String sortBy;
 
         private Builder() {
         }
@@ -155,16 +148,8 @@ public class RecipeRequestModel {
             return this;
         }
 
-        public Builder withSortBy(String sortBy) {
-            if (sortBy != null) {
-                SupportedSorting.assertIsValid(sortBy);
-            }
-            this.sortBy = sortBy;
-            return this;
-        }
-
         public RecipeRequestModel build() {
-            return new RecipeRequestModel(includedIngredients, excludedIngredients, intolerances, nameQuery, diet, mealType, sortBy);
+            return new RecipeRequestModel(includedIngredients, excludedIngredients, intolerances, nameQuery, diet, mealType);
         }
 
     }
