@@ -33,7 +33,7 @@ class SpoonacularClient {
     private static final String NUMBER_PARAM = "number";
     private static final String STEP_BREAKDOWN_PARAM = "stepBreakdown";
     private static final String INSTRUCTIONS_REQUIRED_PARAM = "instructionsRequired";
-    private static final String POINTS_USED_HEADER = "X-API_QUOTA-USED";
+    private static final String POINTS_USED_HEADER = "X-API-QUOTA-USED";
 
     private static final int MAX_RECIPES = 5;
     private static final boolean INSTRUCTIONS_REQUIRED = true;
