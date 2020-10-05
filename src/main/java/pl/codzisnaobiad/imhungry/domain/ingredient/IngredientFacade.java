@@ -27,6 +27,6 @@ public class IngredientFacade {
                 ingredient.getName(),
                 ingredient.getCount() + 1))
             )
-            .orElseGet(() -> (ingredientRepository.save(Ingredient.from(name))));
+            .orElseGet(() -> ingredientRepository.save(Ingredient.from(name)));
     }
 }
