@@ -14,7 +14,7 @@ class MongoTestConfiguration {
 
     private final int mongoPort
 
-    MongoTestConfiguration(@Value('\${mongo.integration.port:27017}') int mongoPort) {
+    MongoTestConfiguration(@Value('\${mongo.integration.port}') int mongoPort) {
         this.mongoPort = mongoPort
     }
 
@@ -26,6 +26,8 @@ class MongoTestConfiguration {
 
     @Bean
     MongoClient mongoClient(GenericContainer mongoContainer) {
-        return MongoClients.create("${MONGODB_PREFIX}${mongoContainer.containerIpAddress}:$mongoPort")
+        return MongoClients.create(
+            "${MONGODB_PREFIX + mongoContainer.containerIpAddress}:${mongoContainer.getMappedPort(mongoPort)}"
+        )
     }
 }

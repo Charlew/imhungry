@@ -43,7 +43,7 @@ class IngredientFacadeSpec extends Specification {
             result.count == 6
     }
 
-    def "should create save ingredient"() {
+    def "should create new ingredient"() {
         given:
             def name = "tomato"
         when:

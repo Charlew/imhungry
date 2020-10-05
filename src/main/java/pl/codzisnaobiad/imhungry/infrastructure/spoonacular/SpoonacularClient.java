@@ -14,7 +14,6 @@ import java.net.URI;
 
 import static java.lang.Float.parseFloat;
 import static java.lang.String.join;
-import static java.util.Optional.ofNullable;
 import static org.springframework.web.util.UriComponentsBuilder.fromHttpUrl;
 
 class SpoonacularClient {
@@ -37,7 +36,6 @@ class SpoonacularClient {
 
     private static final int MAX_RECIPES = 5;
     private static final boolean INSTRUCTIONS_REQUIRED = true;
-    private static final String EMPTY_STRING = "";
     private static final boolean INCLUDE_NUTRITION = true;
     private static final boolean STEP_BREAKDOWN = true;
 
@@ -63,9 +61,9 @@ class SpoonacularClient {
                 .queryParam(INCLUDE_INGREDIENTS_PARAM, mapToCommaSeparatedQuery(recipeRequestModel.getIncludedIngredients()))
                 .queryParam(EXCLUDE_INGREDIENTS_PARAM, mapToCommaSeparatedQuery(recipeRequestModel.getExcludedIngredients()))
                 .queryParam(INTOLERANCES_PARAM, mapToCommaSeparatedQuery(recipeRequestModel.getIntolerances()))
-                .queryParam(QUERY_PARAM, ofNullable(recipeRequestModel.getNameQuery()).orElse(EMPTY_STRING))
-                .queryParam(DIET_PARAM, ofNullable(recipeRequestModel.getDiet()).orElse(EMPTY_STRING))
-                .queryParam(TYPE_PARAM, ofNullable(recipeRequestModel.getMealType()).orElse(EMPTY_STRING))
+                .queryParam(QUERY_PARAM, recipeRequestModel.getNameQuery())
+                .queryParam(DIET_PARAM, recipeRequestModel.getDiet())
+                .queryParam(TYPE_PARAM, recipeRequestModel.getMealType())
                 .queryParam(NUMBER_PARAM, MAX_RECIPES)
                 .queryParam(INSTRUCTIONS_REQUIRED_PARAM, INSTRUCTIONS_REQUIRED)
                 .encode()
