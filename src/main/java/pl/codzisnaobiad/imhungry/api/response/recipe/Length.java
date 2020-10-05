@@ -1,22 +1,22 @@
-package pl.codzisnaobiad.imhungry.api.response;
+package pl.codzisnaobiad.imhungry.api.response.recipe;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
 
-public final class Temperature {
-    private final float number;
+public final class Length {
+    private final int number;
     private final String unit;
 
     @JsonCreator
-    public Temperature(@JsonProperty("number") float number,
-                       @JsonProperty("unit") String unit) {
+    public Length(@JsonProperty("number") int number,
+                  @JsonProperty("unit") String unit) {
         this.number = number;
         this.unit = unit;
     }
 
-    public float getNumber() {
+    public int getNumber() {
         return number;
     }
 
@@ -28,9 +28,9 @@ public final class Temperature {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Temperature that = (Temperature) o;
-        return Float.compare(that.number, number) == 0 &&
-            Objects.equals(unit, that.unit);
+        Length length = (Length) o;
+        return number == length.number &&
+            Objects.equals(unit, length.unit);
     }
 
     @Override
@@ -40,7 +40,7 @@ public final class Temperature {
 
     @Override
     public String toString() {
-        return "Temperature{" +
+        return "Length{" +
             "number=" + number +
             ", unit='" + unit + '\'' +
             '}';

@@ -1,10 +1,10 @@
 package pl.codzisnaobiad.imhungry.infrastructure.spoonacular;
 
-import pl.codzisnaobiad.imhungry.api.request.RecipeRequestModel;
-import pl.codzisnaobiad.imhungry.api.response.RecipeIngredientsResponse;
-import pl.codzisnaobiad.imhungry.api.response.RecipeInstructionsResponse;
-import pl.codzisnaobiad.imhungry.api.response.SearchRecipesResponse;
-import pl.codzisnaobiad.imhungry.domain.RecipeProvider;
+import pl.codzisnaobiad.imhungry.api.request.recipe.RecipeRequestModel;
+import pl.codzisnaobiad.imhungry.api.response.recipe.RecipeIngredientsResponse;
+import pl.codzisnaobiad.imhungry.api.response.recipe.RecipeInstructionsResponse;
+import pl.codzisnaobiad.imhungry.api.response.recipe.SearchRecipesResponse;
+import pl.codzisnaobiad.imhungry.domain.recipe.RecipeProvider;
 
 class SpoonacularRecipeProvider implements RecipeProvider {
     private final RecipeProvider fakeRecipeProvider;

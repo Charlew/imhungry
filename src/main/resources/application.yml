@@ -12,3 +12,8 @@ management:
 
 cors:
   allowed-origins: http://localhost:3000,https://i-am-hungry.netlify.app
+
+spring:
+  data:
+    mongodb:
+      database: imhungry-api

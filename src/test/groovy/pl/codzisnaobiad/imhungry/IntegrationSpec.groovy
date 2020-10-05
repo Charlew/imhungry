@@ -1,7 +1,9 @@
 package pl.codzisnaobiad.imhungry
 
 import com.github.tomakehurst.wiremock.junit.WireMockClassRule
+import com.mongodb.client.MongoClient
 import org.junit.ClassRule
+import org.junit.jupiter.api.AfterEach
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
@@ -33,6 +35,14 @@ abstract class IntegrationSpec extends Specification implements SpoonacularStubs
 
     @Autowired
     TestRestTemplate httpClient
+
+    @Autowired
+    MongoClient mongoClient
+
+    @AfterEach
+    def cleanup() {
+        mongoClient.getDatabase("test").drop()
+    }
 
     def <T> ResponseEntity<T> get(String path, MultiValueMap<String, String> queryParameters, Class < T > responseType) {
         httpClient.getForEntity(queryParamsToImHungryUrl(localUrl() + path, queryParameters), responseType)

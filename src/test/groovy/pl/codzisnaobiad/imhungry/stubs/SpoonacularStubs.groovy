@@ -19,6 +19,13 @@ trait SpoonacularStubs {
                         .withBodyFile(fileName)))
     }
 
+    void stubSpoonacularSearchRecipesWithOnlyIncludedIngredients(MultiValueMap<String, String> queryParameters) {
+        stubFor(get(urlEqualTo("/recipes/complexSearch" + queryParamsToSpoonacularUrl(queryParameters)))
+            .willReturn(aResponse()
+                .withStatus(200)
+                .withBodyFile("SpoonacularSearchRecipesResponse.json")))
+    }
+
     void stubSpoonacularGetRecipeInformationById(String id, String fileName) {
         stubFor(get(urlEqualTo("/recipes/$id/information" + recipeInformationQueryParamsToSpoonacularUrl()))
             .willReturn(aResponse()

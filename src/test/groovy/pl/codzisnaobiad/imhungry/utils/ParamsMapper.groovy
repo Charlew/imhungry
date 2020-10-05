@@ -39,6 +39,14 @@ class ParamsMapper {
                 .toString()
     }
 
+    static String queryParamsWithOnlyIncludedIngredientsToImHungry(String url, MultiValueMap<String, String> queryParams) {
+        UriComponentsBuilder.newInstance()
+            .fromHttpUrl(url)
+            .queryParam("includedIngredient", queryParams.get("includedIngredient"))
+            .build()
+            .toString()
+    }
+
     static String recipeInformationQueryParamsToSpoonacularUrl() {
         UriComponentsBuilder.newInstance()
             .queryParam("includeNutrition", true)

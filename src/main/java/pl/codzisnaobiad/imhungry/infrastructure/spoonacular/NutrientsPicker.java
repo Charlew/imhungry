@@ -1,8 +1,8 @@
 package pl.codzisnaobiad.imhungry.infrastructure.spoonacular;
 
 import org.springframework.stereotype.Component;
-import pl.codzisnaobiad.imhungry.api.response.Nutrient;
-import pl.codzisnaobiad.imhungry.domain.SupportedNutrient;
+import pl.codzisnaobiad.imhungry.api.response.recipe.Nutrient;
+import pl.codzisnaobiad.imhungry.domain.recipe.SupportedNutrient;
 
 import java.util.List;
 

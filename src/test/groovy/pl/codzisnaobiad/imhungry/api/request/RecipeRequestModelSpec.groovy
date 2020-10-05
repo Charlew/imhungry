@@ -1,5 +1,6 @@
 package pl.codzisnaobiad.imhungry.api.request
 
+import pl.codzisnaobiad.imhungry.api.request.recipe.RecipeRequestModel
 import spock.lang.Specification
 
 class RecipeRequestModelSpec extends Specification {

@@ -5,11 +5,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import pl.codzisnaobiad.imhungry.api.request.RecipeRequestModel;
-import pl.codzisnaobiad.imhungry.api.response.RecipeIngredientsResponse;
-import pl.codzisnaobiad.imhungry.api.response.RecipeInstructionsResponse;
-import pl.codzisnaobiad.imhungry.api.response.SearchRecipesResponse;
-import pl.codzisnaobiad.imhungry.domain.RecipeFacade;
+import pl.codzisnaobiad.imhungry.api.request.recipe.RecipeRequestModel;
+import pl.codzisnaobiad.imhungry.api.response.recipe.RecipeIngredientsResponse;
+import pl.codzisnaobiad.imhungry.api.response.recipe.RecipeInstructionsResponse;
+import pl.codzisnaobiad.imhungry.api.response.recipe.SearchRecipesResponse;
+import pl.codzisnaobiad.imhungry.domain.recipe.RecipeFacade;
 
 import java.util.List;
 

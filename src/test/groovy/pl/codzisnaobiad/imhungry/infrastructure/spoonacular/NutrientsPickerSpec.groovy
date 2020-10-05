@@ -1,6 +1,6 @@
 package pl.codzisnaobiad.imhungry.infrastructure.spoonacular
 
-import pl.codzisnaobiad.imhungry.domain.SupportedNutrient
+import pl.codzisnaobiad.imhungry.domain.recipe.SupportedNutrient
 import spock.lang.Specification
 import spock.lang.Subject
 
