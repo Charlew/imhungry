@@ -6,12 +6,12 @@ class InMemoryIngredientRepository implements IngredientRepository {
     private final Map<String, Ingredient> map = new HashMap<>();
 
     @Override
-    Optional<List<Ingredient>> findTop10ByOrderByCountDesc() {
-        return Optional.of(map.entrySet().stream()
+    List<Ingredient> findTop10ByOrderByCountDesc() {
+        return map.entrySet().stream()
             .sorted(Map.Entry.comparingByValue(Collections.reverseOrder()))
             .limit(10)
             .map({ entry -> entry.value })
-            .collect(toList()))
+            .collect(toList())
     }
 
     @Override

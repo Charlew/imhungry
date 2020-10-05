@@ -3,3 +3,8 @@ client.spoonacular:
   api-key: "API_KEY"
 
 mongo.integration.port: 27017
+
+spring:
+  data:
+    mongodb:
+      database: test

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 interface IngredientRepository extends Repository<Ingredient, String> {
-    Optional<List<Ingredient>> findTop10ByOrderByCountDesc();
+    List<Ingredient> findTop10ByOrderByCountDesc();
     Optional<Ingredient> findByName(String name);
     Ingredient save(Ingredient ingredient);
 }

@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 
 @Service
@@ -16,11 +15,9 @@ public class IngredientFacade {
     }
 
     public List<String> getPopularIngredients() {
-        return ingredientRepository.findTop10ByOrderByCountDesc()
-            .map(ingredients -> ingredients.stream()
-                .map(Ingredient::getName)
-                .collect(toList()))
-            .orElse(emptyList());
+        return ingredientRepository.findTop10ByOrderByCountDesc().stream()
+            .map(Ingredient::getName)
+            .collect(toList());
     }
 
     public Ingredient saveIngredient(String name) {
