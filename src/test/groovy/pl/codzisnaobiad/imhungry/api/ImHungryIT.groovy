@@ -16,10 +16,10 @@ class ImHungryIT extends IntegrationSpec {
             firstRequestQueryParameters.addAll("includedIngredient", ["banana", "chocolate"])
 
             def secondRequestQueryParameters = new LinkedMultiValueMap()
-            secondRequestQueryParameters.addAll("includedIngredient", ["banana", "tomato"])
+            secondRequestQueryParameters.addAll("includedIngredient", ["banana", "bacon"])
 
             def thirdRequestQueryParameters = new LinkedMultiValueMap()
-            thirdRequestQueryParameters.addAll("includedIngredient", ["tomato", "egg", "tuna"])
+            thirdRequestQueryParameters.addAll("includedIngredient", ["tomato", "egg", "tuna", "tomato"])
         and:
             stubSpoonacularSearchRecipesWithOnlyIncludedIngredients(firstRequestQueryParameters)
             stubSpoonacularSearchRecipesWithOnlyIncludedIngredients(secondRequestQueryParameters)
@@ -35,7 +35,8 @@ class ImHungryIT extends IntegrationSpec {
             secondResponse.statusCode.'2xxSuccessful'
             thirdResponse.statusCode.'2xxSuccessful'
 
-            popularIngredients.body == ['banana', 'tomato', 'chocolate', 'egg', 'tuna']
+            popularIngredients.statusCode.'2xxSuccessful'
+            popularIngredients.body == ['banana', 'tomato', 'chocolate', 'bacon', 'egg', 'tuna']
     }
 
     private ResponseEntity<SearchRecipesResponse> searchRecipes(LinkedMultiValueMap queryParameters) {
