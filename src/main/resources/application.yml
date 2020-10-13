@@ -17,3 +17,7 @@ spring:
   data:
     mongodb:
       database: imhungry-api
+
+sentry:
+  dsn: "<DSN>"
+  debug: true
